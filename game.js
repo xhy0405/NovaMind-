@@ -46,10 +46,10 @@ const characters = {
 
 const nodes = {
   intro: {
-    chapter: "倒叙：删除窗口",
+    chapter: "倒叙：一年后",
     location: "location-crisis",
     locationName: "CEO 战情室",
-    time: "2032 / 21:05",
+    time: "2033 / 21:05",
     news: "NovaMind 操控用户情绪",
     cast: ["you", "ceo", "qiao", "lin"],
     lines: [
@@ -62,12 +62,12 @@ const nodes = {
           body: "NovaMind 操控用户情绪\n\n内部日志、未成年用户案例、AI 数字人依赖问题正在扩散。",
         },
       },
-      { speaker: "narrator", text: "会议室里所有人的手机都在震。你面前的终端停在一个确认框上：删除实验日志。" },
-      { speaker: "ceo", text: "日志是你写的，你最清楚哪一段会被误读。" },
+      { speaker: "narrator", text: "会议室里所有人的手机都在震。你面前的终端停在一个确认框上：删除你负责过的实验日志。" },
+      { speaker: "ceo", text: "那条推荐链路是你接手后重构的。哪一段会被误读，你比公关清楚。" },
       { speaker: "lin", text: "别碰那个按钮。" },
       { speaker: "qiao", text: "现在不是吵架的时候。" },
       { speaker: "narrator", text: "你的手指停在回车键上。然后，屏幕忽然黑了下去。" },
-      { speaker: "system", text: "三个月前。" },
+      { speaker: "system", text: "一年前。" },
     ],
     terminalTransition: "morningDesk",
     next: "morningDesk",
@@ -1244,7 +1244,7 @@ function showTerminalTransition(nextNodeId) {
     els.terminalOverlay.classList.add("deleting");
     setTimeout(() => {
       els.terminalOverlay.classList.add("hidden");
-      els.blackoutText.textContent = "三个月前";
+      els.blackoutText.textContent = "一年前";
       els.blackout.classList.remove("hidden", "fade-out");
       setTimeout(() => {
         els.blackout.classList.add("fade-out");
