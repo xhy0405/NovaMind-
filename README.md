@@ -6,6 +6,11 @@
 
 直接用浏览器打开 `index.html` 即可运行。
 
+## 剧情文档
+
+- [详细剧情流程案](STORY_FLOW.md)
+- [多分支剧情流程图](BRANCH_FLOW.md)
+
 ## GitHub Pages
 
 这是纯静态网页项目，可以直接通过 GitHub Pages 部署：
