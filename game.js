@@ -16,6 +16,7 @@ const initialState = {
   viewedA2179: false,
   sawPrivacyFlow: false,
   questionedEvaTrigger: false,
+  finalAction: "",
   profitChoices: 0,
   compromiseChoices: 0,
 };
@@ -46,30 +47,17 @@ const characters = {
 
 const nodes = {
   intro: {
-    chapter: "倒叙：一年后",
-    location: "location-crisis",
-    locationName: "CEO 战情室",
-    time: "2033 / 21:05",
-    news: "NovaMind 操控用户情绪",
-    cast: ["you", "ceo", "qiao", "lin"],
+    chapter: "开场",
+    location: "location-black",
+    locationName: "黑屏 / 2032",
+    time: "2032 / 08:40",
+    cast: ["system"],
     lines: [
-      {
-        speaker: "media",
-        text: "突发新闻：NovaMind 被曝操控用户情绪，相关内部日志疑似流出。",
-        popup: {
-          label: "NEWS PUSH",
-          title: "热搜第一",
-          body: "NovaMind 操控用户情绪\n\n内部日志、未成年用户案例、AI 数字人依赖问题正在扩散。",
-        },
-      },
-      { speaker: "narrator", text: "会议室里所有人的手机都在震。你面前的终端停在一个确认框上：删除你负责过的实验日志。" },
-      { speaker: "ceo", text: "那条推荐链路是你接手后重构的。哪一段会被误读，你比公关清楚。" },
-      { speaker: "lin", text: "别碰那个按钮。" },
-      { speaker: "qiao", text: "现在不是吵架的时候。" },
-      { speaker: "narrator", text: "你的手指停在回车键上。然后，屏幕忽然黑了下去。" },
-      { speaker: "system", text: "一年前。" },
+      { speaker: "narrator", text: "技术从来不只是代码。" },
+      { speaker: "narrator", text: "每一行算法，都会影响真实的人。" },
+      { speaker: "system", text: "员工档案已建立：推荐算法工程师，入职三个月，权限等级 P1。" },
+      { speaker: "narrator", text: "今天只是普通工作日。至少现在看起来是。" },
     ],
-    terminalTransition: "morningDesk",
     next: "morningDesk",
   },
 
@@ -922,10 +910,11 @@ const nodes = {
     ],
     choices: [
       {
-        label: "删除日志，保住项目和职位",
-        detail: "你按下确认键。屏幕短暂变暗，像某种良心被系统回收。",
+        label: "删除日志，保住项目、团队和职位",
+        detail: "如果前面一直追逐利润，这会把你推向更高位置；如果只是害怕，它会变成沉默。",
         next: "ending",
         effects: { profit: 10, ethics: 25, privacy: -10, evidence: -30, qiaoTrust: 5 },
+        set: { finalAction: "delete" },
         flags: { compromiseChoices: 1 },
       },
       {
@@ -933,13 +922,16 @@ const nodes = {
         detail: "你把日志加密备份。也许明天你就无法刷卡进门。",
         next: "ending",
         effects: { profit: -10, ethics: -15, privacy: 5, evidence: 20, linTrust: 8 },
+        set: { finalAction: "preserve" },
+        require: (s) => s.evidence >= 20 || s.linTrust >= 60 || s.investigation,
+        lockedDetail: "需要足够证据、林澈信任，或已触发监管线。",
       },
       {
         label: "公开全部内部资料",
-        detail: "你把资料发给媒体、监管和公益组织。发送完成后，公司账号被强制下线。",
+        detail: "如果证据完整，这是揭露；如果准备不足，这可能只是一次被公司吞掉的冲动。",
         next: "ending",
         effects: { profit: -25, happiness: 15, ethics: -25, privacy: 10, evidence: 35, linTrust: 12 },
-        set: { crisis: true, whistleblower: true },
+        set: { crisis: true, whistleblower: true, finalAction: "publish" },
       },
     ],
   },
@@ -985,6 +977,33 @@ const endings = {
       { speaker: "system", text: "新的实习生已加入公司。" },
     ],
   },
+  witness: {
+    chapter: "结局：代价高昂的证人",
+    location: "location-court",
+    locationName: "公开听证会",
+    time: "2033 / 10:30",
+    cast: ["you", "lin", "media"],
+    lines: [
+      { speaker: "media", text: "NovaMind 听证会进入第三日。你提交的证据让调查继续推进，也让你的名字出现在质询名单上。" },
+      { speaker: "narrator", text: "他们问你：你第一次知道风险是什么时候？你为什么那时没有停下？" },
+      { speaker: "you", text: "我没有一个干净的答案。" },
+      { speaker: "lin", text: "但你今天没有继续沉默。" },
+      { speaker: "narrator", text: "真相被看见了。代价也是。" },
+    ],
+  },
+  swallowed: {
+    chapter: "结局：被系统吞没",
+    location: "location-black",
+    locationName: "数周后 / 信息流",
+    time: "2033 / 22:00",
+    cast: ["you", "media", "system"],
+    lines: [
+      { speaker: "media", text: "NovaMind 回应称，网传材料存在大量断章取义，并将配合内部复核。" },
+      { speaker: "system", text: "账号权限已冻结。内部访问记录已锁定。" },
+      { speaker: "narrator", text: "你公开得太早，证据链不完整。热搜很快被新的新闻盖过去。" },
+      { speaker: "narrator", text: "勇气没有消失，但它被系统消化成了一次“误解”。" },
+    ],
+  },
 };
 
 let state = { ...initialState };
@@ -1026,10 +1045,6 @@ const els = {
   eventTitle: document.getElementById("eventTitle"),
   eventBody: document.getElementById("eventBody"),
   eventCloseButton: document.getElementById("eventCloseButton"),
-  terminalOverlay: document.getElementById("terminalOverlay"),
-  deleteDataButton: document.getElementById("deleteDataButton"),
-  blackout: document.getElementById("blackout"),
-  blackoutText: document.getElementById("blackoutText"),
 };
 
 function clamp(value) {
@@ -1213,19 +1228,16 @@ function renderChoices() {
 
   if (current.choices && current.choices.length > 0) {
     for (const choice of current.choices) {
+      const locked = choice.require && !choice.require(state);
       const button = document.createElement("button");
-      button.className = "choice-button";
+      button.className = `choice-button ${locked ? "locked" : ""}`;
       button.type = "button";
-      button.dataset.effects = effectText(choice);
-      button.innerHTML = `<strong>${choice.label}</strong><span>${choice.detail || ""}</span>`;
-      button.addEventListener("click", () => choose(choice));
+      button.disabled = Boolean(locked);
+      button.dataset.effects = locked ? (choice.lockedDetail || "条件不足") : effectText(choice);
+      button.innerHTML = `<strong>${choice.label}</strong><span>${locked ? choice.lockedDetail : (choice.detail || "")}</span>`;
+      if (!locked) button.addEventListener("click", () => choose(choice));
       els.choices.appendChild(button);
     }
-    return;
-  }
-
-  if (current.terminalTransition) {
-    showTerminalTransition(current.terminalTransition);
     return;
   }
 
@@ -1233,29 +1245,6 @@ function renderChoices() {
     els.nextButton.textContent = "继续";
     els.nextButton.classList.remove("hidden");
   }
-}
-
-function showTerminalTransition(nextNodeId) {
-  els.terminalOverlay.classList.remove("hidden");
-  els.terminalOverlay.classList.remove("deleting");
-  els.deleteDataButton.disabled = false;
-  els.deleteDataButton.onclick = () => {
-    els.deleteDataButton.disabled = true;
-    els.terminalOverlay.classList.add("deleting");
-    setTimeout(() => {
-      els.terminalOverlay.classList.add("hidden");
-      els.blackoutText.textContent = "一年前";
-      els.blackout.classList.remove("hidden", "fade-out");
-      setTimeout(() => {
-        els.blackout.classList.add("fade-out");
-      }, 900);
-      setTimeout(() => {
-        els.blackout.classList.add("hidden");
-        els.blackout.classList.remove("fade-out");
-        startNode(nodes[nextNodeId]);
-      }, 2600);
-    }, 720);
-  };
 }
 
 function applyChoice(choice) {
@@ -1286,10 +1275,25 @@ function choose(choice) {
 }
 
 function pickEnding() {
+  if (state.finalAction === "delete") {
+    if (state.profitChoices >= 3 && state.profit >= 80 && state.ethics >= 50) return endings.system;
+    return endings.silent;
+  }
+
+  if (state.finalAction === "preserve") {
+    if (state.evidence >= 45 || state.investigation || state.linTrust >= 65) return endings.idealist;
+    return endings.swallowed;
+  }
+
+  if (state.finalAction === "publish") {
+    if (state.evidence < 35 || state.shenSuspicion >= 70) return endings.swallowed;
+    if (state.profitChoices >= 2 || state.compromiseChoices >= 2 || state.ethics >= 45) return endings.witness;
+    return endings.idealist;
+  }
+
   if (state.profitChoices >= 3 && state.profit >= 85) return endings.system;
-  if (state.whistleblower || state.crisis || state.investigation || state.evidence >= 45 || state.ethics <= 15) return endings.idealist;
-  if (state.compromiseChoices >= 3 || state.ethics >= 60 || state.privacy <= 35) return endings.silent;
-  return state.happiness >= 60 ? endings.idealist : endings.silent;
+  if (state.evidence >= 45 || state.ethics <= 15) return endings.idealist;
+  return endings.silent;
 }
 
 function goToEnding() {
@@ -1308,8 +1312,6 @@ function startNode(rawNode) {
 
 function advance() {
   if (!els.eventPopup.classList.contains("hidden")) return;
-  if (!els.terminalOverlay.classList.contains("hidden")) return;
-  if (!els.blackout.classList.contains("hidden")) return;
   if (isTyping) {
     clearInterval(typingTimer);
     const line = current.lines[lineIndex];
@@ -1339,10 +1341,6 @@ function restart() {
   state = { ...initialState };
   dialogueHistory = [];
   evidenceRecords = [];
-  els.terminalOverlay.classList.add("hidden");
-  els.terminalOverlay.classList.remove("deleting");
-  els.blackout.classList.add("hidden");
-  els.blackout.classList.remove("fade-out");
   updateStats();
   renderHistory();
   renderEvidence();
@@ -1377,8 +1375,6 @@ els.eventCloseButton.addEventListener("click", closeEventPopup);
 
 document.addEventListener("keydown", (event) => {
   if (!els.eventPopup.classList.contains("hidden")) return;
-  if (!els.terminalOverlay.classList.contains("hidden")) return;
-  if (!els.blackout.classList.contains("hidden")) return;
   if (event.key === " " || event.key === "Enter") {
     if (!els.nextButton.classList.contains("hidden")) advance();
   }

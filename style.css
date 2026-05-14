@@ -504,6 +504,18 @@ button {
   transform: translateY(0);
 }
 
+.choice-button.locked {
+  opacity: 0.48;
+  cursor: not-allowed;
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.choice-button.locked strong::before {
+  content: "LOCKED ";
+  color: var(--red);
+  font-size: 11px;
+}
+
 .next-button {
   min-height: 38px;
   padding: 8px 18px;
@@ -631,131 +643,6 @@ button {
   }
 }
 
-.terminal-overlay,
-.blackout {
-  position: absolute;
-  inset: 0;
-  z-index: 14;
-}
-
-.terminal-overlay {
-  display: grid;
-  place-items: center;
-  padding: 24px;
-  background: rgba(1, 4, 9, 0.72);
-  backdrop-filter: blur(5px);
-}
-
-.terminal-window {
-  width: min(660px, 100%);
-  border: 1px solid rgba(106, 216, 255, 0.42);
-  border-radius: 8px;
-  background: rgba(2, 8, 15, 0.96);
-  box-shadow: 0 28px 100px rgba(0, 0, 0, 0.65), inset 0 0 36px rgba(106, 216, 255, 0.08);
-  overflow: hidden;
-  animation: terminalBoot 260ms ease-out;
-}
-
-.terminal-top {
-  height: 42px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0 14px;
-  border-bottom: 1px solid rgba(106, 216, 255, 0.24);
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.terminal-top span {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--red);
-}
-
-.terminal-top span:nth-child(2) {
-  background: var(--amber);
-}
-
-.terminal-top span:nth-child(3) {
-  background: var(--green);
-}
-
-.terminal-top strong {
-  margin-left: 8px;
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.terminal-body {
-  padding: 26px;
-  font-family: Consolas, "Courier New", monospace;
-  color: #a7f3d0;
-}
-
-.terminal-body p {
-  margin: 0 0 12px;
-  line-height: 1.5;
-}
-
-.terminal-warning {
-  color: #ff8a96;
-  margin-top: 18px;
-}
-
-.delete-data-button {
-  width: 100%;
-  margin-top: 18px;
-  padding: 15px 18px;
-  border: 1px solid rgba(255, 107, 122, 0.72);
-  border-radius: 6px;
-  color: #fff;
-  background: linear-gradient(180deg, #b91c1c, #7f1d1d);
-  font-weight: 900;
-  cursor: pointer;
-  box-shadow: 0 0 24px rgba(255, 107, 122, 0.22);
-}
-
-.delete-data-button:hover {
-  filter: brightness(1.08);
-}
-
-.terminal-overlay.deleting .terminal-window {
-  animation: terminalGlitch 520ms steps(2, end) infinite;
-}
-
-.blackout {
-  display: grid;
-  place-items: center;
-  background: #000;
-  color: var(--text);
-  font-size: 28px;
-}
-
-.blackout.fade-out {
-  animation: blackoutFade 1800ms ease-in forwards;
-}
-
-.terminal-overlay.hidden,
-.blackout.hidden,
 .event-popup.hidden {
   display: none !important;
-}
-
-@keyframes terminalBoot {
-  from { opacity: 0; transform: translateY(10px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@keyframes terminalGlitch {
-  0% { transform: translate(0, 0); filter: hue-rotate(0deg); }
-  35% { transform: translate(-3px, 1px); filter: hue-rotate(20deg); }
-  70% { transform: translate(3px, -1px); filter: hue-rotate(-16deg); }
-  100% { transform: translate(0, 0); filter: hue-rotate(0deg); }
-}
-
-@keyframes blackoutFade {
-  0% { opacity: 1; }
-  55% { opacity: 1; }
-  100% { opacity: 0; }
 }
