@@ -16,6 +16,13 @@ const initialState = {
   viewedA2179: false,
   sawPrivacyFlow: false,
   questionedEvaTrigger: false,
+  privacyJoined: false,
+  privacyRefused: false,
+  privacyReported: false,
+  dependenceOptimized: false,
+  antiAddiction: false,
+  reportPublished: false,
+  usedHealthyForEva: false,
   finalAction: "",
   profitChoices: 0,
   compromiseChoices: 0,
@@ -340,6 +347,10 @@ const nodes = {
       { speaker: "lin", text: "项目没问题的话，通常不需要提前提醒这个。" },
       { speaker: "narrator", text: "你笑了一下。那一秒很短，短到差点让你忘了乔岚避开了项目名字。" },
     ],
+    conditionalLines: [
+      { flag: "highStimulus", index: 6, line: { speaker: "qiao", text: "顺便说一句，上一版高刺激策略救了半条曲线。董事会现在记得你的名字。" } },
+      { flag: "healthyMode", index: 6, line: { speaker: "lin", text: "健康推荐那个小桶还在跑。数据不漂亮，但有些用户真的提前退出了。" } },
+    ],
     next: "privacyOfficeHint",
   },
 
@@ -472,12 +483,17 @@ const nodes = {
       { speaker: "narrator", text: "他说这句话时没有得意，也没有迟疑。像是在读一条已经通过评审的规则。" },
       { speaker: "shen", text: "明早排期会锁。你不用现在答复，但你今晚大概睡不好。" },
     ],
+    conditionalLines: [
+      { flag: "sawPrivacyFlow", index: 6, line: { speaker: "you", text: "我看过数据流图。撤回机制被放到后续版本，这不是疏漏。" } },
+      { condition: (s) => s.linTrust >= 58, index: 7, line: { speaker: "shen", text: "你已经让林澈看过邮件了吧。下次转发之前，至少换个标题。" } },
+    ],
     choices: [
       {
         label: "接入后台数据，但把需求名写成“推荐相关性提升”",
         detail: "你不喜欢这个项目，但你知道拒绝后它可能会被交给更激进的人。",
         next: "privacyAfterA",
         effects: { profit: 15, privacy: -20, ethics: 15, shenSuspicion: -5 },
+        set: { privacyJoined: true },
         flags: { profitChoices: 1, compromiseChoices: 1 },
       },
       {
@@ -485,13 +501,14 @@ const nodes = {
         detail: "你退回任务，不是喊停项目，而是要求它证明自己必须存在。",
         next: "privacyAfterB",
         effects: { profit: -5, ethics: -10, privacy: 5, linTrust: 5, qiaoTrust: -4 },
+        set: { privacyRefused: true },
       },
       {
         label: "匿名把材料交给监管窗口",
         detail: "你删除浏览记录，却知道公司内网从来没有真正的匿名。",
         next: "privacyAfterC",
         effects: { profit: -10, privacy: 10, ethics: -15, evidence: 20, shenSuspicion: 25 },
-        set: { investigation: true },
+        set: { investigation: true, privacyReported: true },
       },
     ],
   },
@@ -699,6 +716,11 @@ const nodes = {
       { speaker: "lin", text: "你听出来了。" },
       { speaker: "narrator", text: "他说完就沉默了。你突然觉得这条走廊太长，长得像一段故意不结束的加载条。" },
     ],
+    conditionalLines: [
+      { flag: "viewedA2179", index: 3, line: { speaker: "you", text: "我早上看过这个编号。那时候年龄字段被隐藏了。" } },
+      { flag: "privacyJoined", index: 6, line: { speaker: "lin", text: "她的画像链路里已经接入了更多后台特征。你知道这意味着什么。" } },
+      { flag: "privacyRefused", index: 6, line: { speaker: "lin", text: "你之前要求的数据最小化方案，让我们至少看到了部分画像来源。" } },
+    ],
     next: "companionMeetXia",
   },
 
@@ -726,6 +748,20 @@ const nodes = {
     ],
     conditionalLines: [
       { flag: "healthyMode", index: 11, line: { speaker: "lin", text: "还有一件事。你之前提的健康推荐模式灰度结果出来了。收入不高，但用户焦虑评分下降了 21%。这不是胜利，但说明另一条路不是空想。" } },
+      { flag: "highStimulus", index: 7, line: { speaker: "xia", text: "有一阵子，它总把我推回那些让我更睡不着的内容。我知道不是你一个人决定的，但……你们应该知道吧？" } },
+      { flag: "questionedEvaTrigger", index: 12, line: { speaker: "you", text: "我看过触发条件。它不是在陪伴所有人，它是在找最容易留下的人。" } },
+    ],
+    conditionalChoices: [
+      {
+        flag: "healthyMode",
+        choice: {
+          label: "把健康推荐模式接入 EVA，让它优先帮助用户离开",
+          detail: "这会明显损害商业指标，但你手里有一条已经跑通过的小流量证据。",
+          next: "companionAfterHealthy",
+          effects: { profit: -18, happiness: 26, ethics: -18, xiaHope: 24, evidence: 12, linTrust: 10, qiaoTrust: -12 },
+          set: { antiAddiction: true, usedHealthyForEva: true },
+        },
+      },
     ],
     choices: [
       {
@@ -733,6 +769,7 @@ const nodes = {
         detail: "你把“想念你”写进召回策略，让系统在用户最孤独的时候出现。",
         next: "companionAfterA",
         effects: { profit: 25, happiness: -25, ethics: 20, xiaHope: -20, qiaoTrust: 8, linTrust: -12 },
+        set: { dependenceOptimized: true },
         flags: { profitChoices: 1, compromiseChoices: 1 },
       },
       {
@@ -740,13 +777,14 @@ const nodes = {
         detail: "你让数字人不再永远顺从：它会沉默、告别，也会建议用户联系现实中的人。",
         next: "companionAfterB",
         effects: { profit: -10, happiness: 20, ethics: -10, xiaHope: 12, qiaoTrust: -8, linTrust: 8 },
+        set: { antiAddiction: true },
       },
       {
         label: "和林澈公开风险研究报告",
         detail: "你们把最刺眼的图表放在第一页，也把自己的名字放了上去。",
         next: "companionAfterC",
         effects: { profit: -15, happiness: 10, ethics: -20, evidence: 25, linTrust: 15, qiaoTrust: -15 },
-        set: { crisis: true, whistleblower: true },
+        set: { crisis: true, whistleblower: true, reportPublished: true },
       },
     ],
   },
@@ -767,6 +805,22 @@ const nodes = {
       { speaker: "you", text: "后来呢？" },
       { speaker: "lin", text: "后来我开始做伦理研究。" },
       { speaker: "narrator", text: "他把实验报告合上，声音很轻。像怕吵醒什么。" },
+    ],
+    next: "companionNightMessage",
+  },
+
+  companionAfterHealthy: {
+    chapter: "第三章：余波",
+    location: "location-lab",
+    locationName: "数字人实验室 / 夜",
+    time: "2032 / 22:02",
+    cast: ["you", "xia", "lin", "qiao"],
+    lines: [
+      { speaker: "system", text: "健康推荐模式已接入 EVA：连续对话后，系统将优先触发休息、现实联系人和求助资源。" },
+      { speaker: "qiao", text: "你知道这会让留存掉多少吗？" },
+      { speaker: "you", text: "知道。灰度数据我也看过。" },
+      { speaker: "xia", text: "它刚刚问我，要不要给妈妈发一句“我想回家”。" },
+      { speaker: "lin", text: "这不是完美答案。但至少这次，系统没有假装自己就是世界。" },
     ],
     next: "companionNightMessage",
   },
@@ -851,6 +905,12 @@ const nodes = {
       { speaker: "qiao", text: "对。但都会有人丢工作。" },
       { speaker: "narrator", text: "她说完，像突然意识到这句话太诚实，又把表情收了回去。" },
     ],
+    conditionalLines: [
+      { flag: "dependenceOptimized", index: 5, line: { speaker: "lin", text: "EVA 那条高孤独召回被扒出来了。对方甚至知道触发字段名。" } },
+      { flag: "antiAddiction", index: 5, line: { speaker: "qiao", text: "防沉迷机制也被骂了。有人说我们承认产品有问题，有人说我们终于像个人。" } },
+      { flag: "reportPublished", index: 4, line: { speaker: "qiao", text: "还有，你们那份报告现在是所有截图的源头之一。公关已经快疯了。" } },
+      { flag: "privacyReported", index: 7, line: { speaker: "narrator", text: "沈舟没有出现在咖啡机旁。你听见有人说，合规部一早被叫去开闭门会。" } },
+    ],
     next: "crisisOffice",
   },
 
@@ -908,6 +968,12 @@ const nodes = {
       { speaker: "ceo", text: "你最懂日志结构。你来做。" },
       { speaker: "narrator", text: "你突然想起早上那杯冰美式，杯套上的口号已经被水汽泡皱：Understand Everyone." },
     ],
+    conditionalLines: [
+      { flag: "privacyJoined", index: 7, line: { speaker: "shen", text: "后台数据链路也在风险范围内。你参与过特征接入，最好别让自己出现在太多地方。" } },
+      { flag: "privacyReported", index: 7, line: { speaker: "shen", text: "监管已经在路上了。现在删东西，只会让问题从合规变成刑责。" } },
+      { flag: "usedHealthyForEva", index: 10, line: { speaker: "qiao", text: "健康模式那条线能证明我们不是完全没有替代方案。问题是，公司不想让它成为主叙事。" } },
+      { flag: "dependenceOptimized", index: 10, line: { speaker: "ceo", text: "情感依赖那版策略是谁批的，媒体早晚会查到。你现在最该做的是止损。" } },
+    ],
     choices: [
       {
         label: "删除日志，保住项目、团队和职位",
@@ -932,6 +998,28 @@ const nodes = {
         next: "ending",
         effects: { profit: -25, happiness: 15, ethics: -25, privacy: 10, evidence: 35, linTrust: 12 },
         set: { crisis: true, whistleblower: true, finalAction: "publish" },
+      },
+    ],
+    conditionalChoices: [
+      {
+        condition: (s) => s.qiaoTrust >= 60 && s.evidence >= 25,
+        choice: {
+          label: "让乔岚拖住公关，你转移证据",
+          detail: "这不是公开，也不是沉默。你赌乔岚还愿意保护一次“更难看的真相”。",
+          next: "ending",
+          effects: { profit: -15, ethics: -18, privacy: 5, evidence: 28, qiaoTrust: -10 },
+          set: { finalAction: "preserve" },
+        },
+      },
+      {
+        condition: (s) => s.privacyReported && s.evidence >= 30,
+        choice: {
+          label: "把证据同步给监管联系人",
+          detail: "你不靠热搜赌命，而是把材料交给已经介入的人。",
+          next: "ending",
+          effects: { profit: -18, ethics: -22, privacy: 12, evidence: 30, shenSuspicion: 20 },
+          set: { finalAction: "preserve" },
+        },
       },
     ],
   },
@@ -1066,16 +1154,30 @@ function effectText(choice) {
     .join("\n");
 }
 
+function conditionMet(item) {
+  if (item.condition) return item.condition(state);
+  if (item.flag) return Boolean(state[item.flag]);
+  return true;
+}
+
 function prepareNode(rawNode) {
   const node = {
     ...rawNode,
     lines: rawNode.lines.map((line) => ({ ...line })),
     cast: rawNode.cast ? [...rawNode.cast] : [],
+    choices: rawNode.choices ? rawNode.choices.map((choice) => ({ ...choice })) : undefined,
   };
 
   for (const item of rawNode.conditionalLines || []) {
-    if (state[item.flag]) {
+    if (conditionMet(item)) {
       node.lines.splice(item.index, 0, { ...item.line });
+    }
+  }
+
+  for (const item of rawNode.conditionalChoices || []) {
+    if (conditionMet(item)) {
+      if (!node.choices) node.choices = [];
+      node.choices.push({ ...item.choice });
     }
   }
 
@@ -1228,6 +1330,7 @@ function renderChoices() {
 
   if (current.choices && current.choices.length > 0) {
     for (const choice of current.choices) {
+      if (choice.condition && !choice.condition(state)) continue;
       const locked = choice.require && !choice.require(state);
       const button = document.createElement("button");
       button.className = `choice-button ${locked ? "locked" : ""}`;
