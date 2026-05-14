@@ -20,6 +20,7 @@
         </div>
         <div class="top-actions">
           <button class="icon-button" id="statsButton" type="button" aria-expanded="false">属性</button>
+          <button class="icon-button" id="evidenceButton" type="button" aria-expanded="false">证据</button>
           <button class="icon-button" id="historyButton" type="button" aria-expanded="false">历史</button>
           <button class="icon-button" id="profileButton" type="button" aria-expanded="false">人物</button>
           <button class="ghost-button" id="restartButton" type="button">重新开始</button>
@@ -55,6 +56,14 @@
           <span>最近的剧情文本会记录在这里</span>
         </div>
         <div class="drawer-list" id="historyList"></div>
+      </aside>
+
+      <aside class="side-drawer text-drawer" id="evidenceDrawer" aria-label="证据记录">
+        <div class="drawer-head">
+          <strong>证据记录</strong>
+          <span>你主动查看或保存过的线索</span>
+        </div>
+        <div class="drawer-list" id="evidenceList"></div>
       </aside>
 
       <aside class="side-drawer text-drawer" id="profileDrawer" aria-label="人物信息">

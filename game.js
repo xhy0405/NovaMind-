@@ -13,6 +13,9 @@ const initialState = {
   crisis: false,
   whistleblower: false,
   highStimulus: false,
+  viewedA2179: false,
+  sawPrivacyFlow: false,
+  questionedEvaTrigger: false,
   profitChoices: 0,
   compromiseChoices: 0,
 };
@@ -43,16 +46,20 @@ const characters = {
 
 const nodes = {
   intro: {
-    chapter: "开场",
-    location: "location-black",
-    locationName: "黑屏 / 2032",
-    time: "2032 / 08:40",
-    cast: ["system"],
+    chapter: "倒叙：删除窗口",
+    location: "location-crisis",
+    locationName: "CEO 战情室",
+    time: "2032 / 21:05",
+    news: "NovaMind 操控用户情绪",
+    cast: ["you", "ceo", "qiao", "lin"],
     lines: [
-      { speaker: "narrator", text: "技术从来不只是代码。" },
-      { speaker: "narrator", text: "每一行算法，都会影响真实的人。" },
-      { speaker: "system", text: "员工档案已建立：推荐算法工程师，入职三个月，权限等级 P1。" },
-      { speaker: "narrator", text: "你还不知道，今天之后，许多普通的工作日都会变得难以回想。" },
+      { speaker: "media", text: "突发新闻：NovaMind 被曝操控用户情绪，相关内部日志疑似流出。" },
+      { speaker: "narrator", text: "会议室里所有人的手机都在震。你面前的终端停在一个确认框上：删除实验日志。" },
+      { speaker: "ceo", text: "日志是你写的，你最清楚哪一段会被误读。" },
+      { speaker: "lin", text: "别碰那个按钮。" },
+      { speaker: "qiao", text: "现在不是吵架的时候。" },
+      { speaker: "narrator", text: "你的手指停在回车键上。然后，屏幕忽然黑了下去。" },
+      { speaker: "system", text: "三个月前。" },
     ],
     next: "morningDesk",
   },
@@ -64,8 +71,7 @@ const nodes = {
     time: "2032 / 08:47",
     cast: ["you", "qiao", "lin"],
     lines: [
-      { speaker: "narrator", text: "入职 NovaMind 的第三个月，你终于学会了两件事。" },
-      { speaker: "narrator", text: "第一，公司的咖啡机在九点之后永远排队。第二，任何写着“只是一个小实验”的需求，最后都会变成线上策略。" },
+      { speaker: "narrator", text: "入职 NovaMind 的第三个月，你学会了两件事：九点后咖啡机永远排队；写着“小实验”的需求，最后通常都会上线。" },
       { speaker: "lin", text: "你又来这么早。" },
       { speaker: "you", text: "不是早，是昨晚没怎么走。" },
       { speaker: "lin", text: "哦。那我换个说法。你还活着，挺好。" },
@@ -85,9 +91,58 @@ const nodes = {
       { speaker: "you", text: "这是夸我适应得快？" },
       { speaker: "lin", text: "不完全是。" },
       { speaker: "narrator", text: "他没有继续说，只是用手指轻轻敲了两下纸杯。" },
-      { speaker: "lin", text: "别太快习惯。习惯把人的状态，叫成指标波动。" },
+      { speaker: "system", text: "异常反馈队列出现新记录：#A-2179。分类：夜间连续使用 / 负面情绪。" },
+    ],
+    choices: [
+      {
+        label: "点开 #A-2179 的详情",
+        detail: "你知道这样会耽误会议前的准备，但那条反馈像一根细小的刺。",
+        next: "morningFeedbackView",
+        effects: { evidence: 5, linTrust: 3 },
+        set: { viewedA2179: true },
+        evidenceItem: {
+          title: "异常反馈 #A-2179",
+          body: "“我明明已经很累了，可它一直推给我那些让我更睡不着的东西。” 用户年龄字段被隐藏。",
+        },
+      },
+      {
+        label: "先关掉面板，去开会",
+        detail: "你告诉自己，一条反馈说明不了什么。会议提醒已经弹了第三次。",
+        next: "morningFeedbackSkip",
+        effects: { qiaoTrust: 2, linTrust: -2 },
+      },
+    ],
+  },
+
+  morningFeedbackView: {
+    chapter: "序章：异常反馈",
+    location: "location-office",
+    locationName: "NovaMind 开放办公区",
+    time: "2032 / 09:06",
+    cast: ["you", "lin"],
+    lines: [
+      { speaker: "narrator", text: "你点开详情。反馈正文很短，却不像普通投诉。" },
+      { speaker: "system", text: "#A-2179：我明明已经很累了，可它一直推给我那些让我更睡不着的东西。我是不是太没自制力了？" },
+      { speaker: "you", text: "年龄字段为什么被隐藏了？" },
+      { speaker: "lin", text: "可能是权限，也可能是有人不想让你在会议前看到。" },
       { speaker: "system", text: "会议提醒：09:30 增长策略评审。会议室 A17。主持人：乔岚。" },
       { speaker: "lin", text: "咖啡带着吧。她讲话很快，你需要点东西压住血压。" },
+    ],
+    next: "corridor",
+  },
+
+  morningFeedbackSkip: {
+    chapter: "序章：关掉面板",
+    location: "location-office",
+    locationName: "NovaMind 开放办公区",
+    time: "2032 / 09:08",
+    cast: ["you", "lin"],
+    lines: [
+      { speaker: "narrator", text: "你把异常反馈折叠起来。红点还在角落里亮着，像一个没被处理的小伤口。" },
+      { speaker: "lin", text: "不看？" },
+      { speaker: "you", text: "先开会。回来再说。" },
+      { speaker: "lin", text: "程序员说“回来再说”，一般就是不会再说。" },
+      { speaker: "system", text: "会议提醒：09:30 增长策略评审。会议室 A17。主持人：乔岚。" },
     ],
     next: "corridor",
   },
@@ -329,6 +384,81 @@ const nodes = {
       { speaker: "you", text: "这个开场听起来更不适合了。" },
       { speaker: "shen", text: "合规需求通常都不像合规需求。" },
     ],
+    choices: [
+      {
+        label: "打开数据流图，先看清楚它到底要什么",
+        detail: "你没有急着表态，而是把需求拆到字段级别。越具体，越难装作没看见。",
+        next: "privacyMailInspect",
+        effects: { evidence: 8, shenSuspicion: 4 },
+        set: { sawPrivacyFlow: true },
+        evidenceItem: {
+          title: "用户理解增强项目 / 数据流图",
+          body: "剪贴板摘要、通讯录关系、位置轨迹、夜间使用习惯将进入画像链路。撤回机制标注为“后续版本”。",
+        },
+      },
+      {
+        label: "把邮件转给林澈，问他有没有见过类似项目",
+        detail: "这会让林澈更早介入，也会让你的痕迹变多。",
+        next: "privacyMailForward",
+        effects: { linTrust: 6, evidence: 4, shenSuspicion: 8 },
+        evidenceItem: {
+          title: "转发给林澈的合规邮件",
+          body: "你保留了邮件副本。主题：用户理解增强项目 - 特征链路接入评审。",
+        },
+      },
+      {
+        label: "先不点附件，等沈舟晚上说明",
+        detail: "你不想在公司系统里留下更多访问记录。",
+        next: "privacyMailWait",
+        effects: { shenSuspicion: -2 },
+      },
+    ],
+  },
+
+  privacyMailInspect: {
+    chapter: "第二章：数据流图",
+    location: "location-office",
+    locationName: "开放办公区 / 傍晚",
+    time: "2032 / 18:51",
+    cast: ["you", "shen"],
+    lines: [
+      { speaker: "narrator", text: "你放大数据流图。每个箭头都画得规整，像只要线条足够整齐，风险就会变小。" },
+      { speaker: "you", text: "撤回机制为什么写后续版本？" },
+      { speaker: "shen", text: "因为第一版先验证价值。" },
+      { speaker: "you", text: "用户的退出权也是后续价值？" },
+      { speaker: "shen", text: "你今晚到停车场，我们慢慢聊。" },
+    ],
+    next: "privacyParking",
+  },
+
+  privacyMailForward: {
+    chapter: "第二章：转发",
+    location: "location-office",
+    locationName: "开放办公区 / 傍晚",
+    time: "2032 / 18:55",
+    cast: ["you", "lin", "shen"],
+    lines: [
+      { speaker: "system", text: "邮件已转发给：林澈。" },
+      { speaker: "lin", text: "我看到了。别在办公区聊。" },
+      { speaker: "shen", text: "你动作比我想的快。" },
+      { speaker: "you", text: "你站我后面多久了？" },
+      { speaker: "shen", text: "足够知道你已经不打算只听我一个版本。" },
+    ],
+    next: "privacyParking",
+  },
+
+  privacyMailWait: {
+    chapter: "第二章：未读附件",
+    location: "location-office",
+    locationName: "开放办公区 / 傍晚",
+    time: "2032 / 18:49",
+    cast: ["you", "shen"],
+    lines: [
+      { speaker: "narrator", text: "你没有点开附件。邮件标题停在收件箱里，像一扇暂时没有推开的门。" },
+      { speaker: "shen", text: "谨慎是好习惯。" },
+      { speaker: "you", text: "也可能只是拖延。" },
+      { speaker: "shen", text: "拖延至少说明你还知道有些东西不该随手打开。" },
+    ],
     next: "privacyParking",
   },
 
@@ -475,7 +605,81 @@ const nodes = {
       { speaker: "lin", text: "模型会在什么时候触发？" },
       { speaker: "qiao", text: "用户最需要的时候。" },
       { speaker: "lin", text: "或者最脆弱的时候。" },
-      { speaker: "narrator", text: "这一次，乔岚没有反驳。她只是让演示继续。" },
+      { speaker: "narrator", text: "这一次，乔岚没有反驳。演示停在 EVA 的微笑上，像等你给出反应。" },
+    ],
+    choices: [
+      {
+        label: "追问 EVA 的触发条件",
+        detail: "你不评价文案，只问系统什么时候会把这句话送到用户面前。",
+        next: "companionDemoAsk",
+        effects: { evidence: 6, linTrust: 4, qiaoTrust: -3 },
+        set: { questionedEvaTrigger: true },
+        evidenceItem: {
+          title: "EVA 主动陪伴触发条件",
+          body: "触发条件包括夜间在线、连续低情绪表达、现实社交下降、高依赖倾向。字段名被包装为“陪伴需求预测”。",
+        },
+      },
+      {
+        label: "认可演示效果，先让二期继续跑",
+        detail: "EVA 的表现确实流畅。你暂时把不适感压下去。",
+        next: "companionDemoApprove",
+        effects: { profit: 5, qiaoTrust: 5, linTrust: -4 },
+        flags: { profitChoices: 1 },
+      },
+      {
+        label: "保持沉默，观察乔岚和林澈的反应",
+        detail: "你没有立刻站队。沉默不会解决问题，但有时能让别人多说一句。",
+        next: "companionDemoSilence",
+        effects: { evidence: 2 },
+      },
+    ],
+  },
+
+  companionDemoAsk: {
+    chapter: "第三章：触发条件",
+    location: "location-lab",
+    locationName: "数字人情感实验室",
+    time: "2032 / 14:18",
+    cast: ["you", "qiao", "lin"],
+    lines: [
+      { speaker: "you", text: "我想看触发条件。不是文案，是它什么时候出现。" },
+      { speaker: "qiao", text: "你现在越来越像林澈了。" },
+      { speaker: "lin", text: "这是夸奖。" },
+      { speaker: "qiao", text: "不完全是。" },
+      { speaker: "system", text: "触发样例：夜间在线、低情绪表达、现实社交下降、高依赖倾向。" },
+      { speaker: "narrator", text: "你看见“高依赖倾向”四个字时，屏幕右下角跳出一个熟悉的编号：A-2179。" },
+    ],
+    next: "companionUserShadow",
+  },
+
+  companionDemoApprove: {
+    chapter: "第三章：继续演示",
+    location: "location-lab",
+    locationName: "数字人情感实验室",
+    time: "2032 / 14:18",
+    cast: ["you", "qiao", "lin"],
+    lines: [
+      { speaker: "you", text: "效果确实自然。先继续看完整链路吧。" },
+      { speaker: "qiao", text: "谢谢，终于有人说一句像项目评审的话。" },
+      { speaker: "lin", text: "自然不等于安全。" },
+      { speaker: "qiao", text: "我没说等于。" },
+      { speaker: "narrator", text: "演示继续。EVA 的笑容没有变化，你却觉得它比刚才更近了一点。" },
+    ],
+    next: "companionUserShadow",
+  },
+
+  companionDemoSilence: {
+    chapter: "第三章：沉默",
+    location: "location-lab",
+    locationName: "数字人情感实验室",
+    time: "2032 / 14:18",
+    cast: ["you", "qiao", "lin"],
+    lines: [
+      { speaker: "narrator", text: "你没有说话。沉默让会议室空了两秒。" },
+      { speaker: "qiao", text: "怎么，都等我当坏人？" },
+      { speaker: "lin", text: "没人说你是坏人。" },
+      { speaker: "qiao", text: "那就更麻烦了。坏人至少好处理。" },
+      { speaker: "narrator", text: "她把演示切到下一页。用户编号列表一闪而过，你看见了 A-2179。" },
     ],
     next: "companionUserShadow",
   },
@@ -766,6 +970,7 @@ let lineIndex = 0;
 let typingTimer = null;
 let isTyping = false;
 let dialogueHistory = [];
+let evidenceRecords = [];
 
 const els = {
   stage: document.getElementById("stage"),
@@ -786,6 +991,9 @@ const els = {
   historyButton: document.getElementById("historyButton"),
   historyDrawer: document.getElementById("historyDrawer"),
   historyList: document.getElementById("historyList"),
+  evidenceButton: document.getElementById("evidenceButton"),
+  evidenceDrawer: document.getElementById("evidenceDrawer"),
+  evidenceList: document.getElementById("evidenceList"),
   profileButton: document.getElementById("profileButton"),
   profileDrawer: document.getElementById("profileDrawer"),
   profileList: document.getElementById("profileList"),
@@ -865,6 +1073,27 @@ function renderHistory() {
     row.className = "drawer-item";
     row.innerHTML = `<strong>${item.speaker}</strong><p>${item.text}</p>`;
     els.historyList.appendChild(row);
+  }
+}
+
+function addEvidence(item) {
+  if (!item) return;
+  if (evidenceRecords.some((record) => record.title === item.title)) return;
+  evidenceRecords.push(item);
+  renderEvidence();
+}
+
+function renderEvidence() {
+  els.evidenceList.innerHTML = "";
+  if (evidenceRecords.length === 0) {
+    els.evidenceList.innerHTML = `<div class="drawer-item"><p>暂无证据。主动查看邮件、日志或异常反馈后会记录在这里。</p></div>`;
+    return;
+  }
+  for (const item of evidenceRecords) {
+    const row = document.createElement("div");
+    row.className = "drawer-item";
+    row.innerHTML = `<strong>${item.title}</strong><p>${item.body}</p>`;
+    els.evidenceList.appendChild(row);
   }
 }
 
@@ -957,6 +1186,7 @@ function applyChoice(choice) {
       state[key] = (state[key] ?? 0) + delta;
     }
   }
+  addEvidence(choice.evidenceItem);
   updateStats();
 }
 
@@ -1019,8 +1249,10 @@ function advance() {
 function restart() {
   state = { ...initialState };
   dialogueHistory = [];
+  evidenceRecords = [];
   updateStats();
   renderHistory();
+  renderEvidence();
   renderProfiles();
   els.nextButton.textContent = "继续";
   startNode(nodes.intro);
@@ -1029,6 +1261,7 @@ function restart() {
 function toggleDrawer(drawer, button) {
   for (const item of [
     [els.statsDrawer, els.statsButton],
+    [els.evidenceDrawer, els.evidenceButton],
     [els.historyDrawer, els.historyButton],
     [els.profileDrawer, els.profileButton],
   ]) {
@@ -1044,6 +1277,7 @@ function toggleDrawer(drawer, button) {
 els.nextButton.addEventListener("click", advance);
 els.restartButton.addEventListener("click", restart);
 els.statsButton.addEventListener("click", () => toggleDrawer(els.statsDrawer, els.statsButton));
+els.evidenceButton.addEventListener("click", () => toggleDrawer(els.evidenceDrawer, els.evidenceButton));
 els.historyButton.addEventListener("click", () => toggleDrawer(els.historyDrawer, els.historyButton));
 els.profileButton.addEventListener("click", () => toggleDrawer(els.profileDrawer, els.profileButton));
 
