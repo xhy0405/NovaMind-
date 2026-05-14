@@ -69,6 +69,7 @@ const nodes = {
       { speaker: "narrator", text: "你的手指停在回车键上。然后，屏幕忽然黑了下去。" },
       { speaker: "system", text: "三个月前。" },
     ],
+    terminalTransition: "morningDesk",
     next: "morningDesk",
   },
 
@@ -1025,6 +1026,10 @@ const els = {
   eventTitle: document.getElementById("eventTitle"),
   eventBody: document.getElementById("eventBody"),
   eventCloseButton: document.getElementById("eventCloseButton"),
+  terminalOverlay: document.getElementById("terminalOverlay"),
+  deleteDataButton: document.getElementById("deleteDataButton"),
+  blackout: document.getElementById("blackout"),
+  blackoutText: document.getElementById("blackoutText"),
 };
 
 function clamp(value) {
@@ -1219,10 +1224,38 @@ function renderChoices() {
     return;
   }
 
+  if (current.terminalTransition) {
+    showTerminalTransition(current.terminalTransition);
+    return;
+  }
+
   if (current.next) {
     els.nextButton.textContent = "继续";
     els.nextButton.classList.remove("hidden");
   }
+}
+
+function showTerminalTransition(nextNodeId) {
+  els.terminalOverlay.classList.remove("hidden");
+  els.terminalOverlay.classList.remove("deleting");
+  els.deleteDataButton.disabled = false;
+  els.deleteDataButton.onclick = () => {
+    els.deleteDataButton.disabled = true;
+    els.terminalOverlay.classList.add("deleting");
+    setTimeout(() => {
+      els.terminalOverlay.classList.add("hidden");
+      els.blackoutText.textContent = "三个月前";
+      els.blackout.classList.remove("hidden", "fade-out");
+      setTimeout(() => {
+        els.blackout.classList.add("fade-out");
+      }, 900);
+      setTimeout(() => {
+        els.blackout.classList.add("hidden");
+        els.blackout.classList.remove("fade-out");
+        startNode(nodes[nextNodeId]);
+      }, 2600);
+    }, 720);
+  };
 }
 
 function applyChoice(choice) {
@@ -1275,6 +1308,8 @@ function startNode(rawNode) {
 
 function advance() {
   if (!els.eventPopup.classList.contains("hidden")) return;
+  if (!els.terminalOverlay.classList.contains("hidden")) return;
+  if (!els.blackout.classList.contains("hidden")) return;
   if (isTyping) {
     clearInterval(typingTimer);
     const line = current.lines[lineIndex];
@@ -1304,6 +1339,10 @@ function restart() {
   state = { ...initialState };
   dialogueHistory = [];
   evidenceRecords = [];
+  els.terminalOverlay.classList.add("hidden");
+  els.terminalOverlay.classList.remove("deleting");
+  els.blackout.classList.add("hidden");
+  els.blackout.classList.remove("fade-out");
   updateStats();
   renderHistory();
   renderEvidence();
@@ -1338,6 +1377,8 @@ els.eventCloseButton.addEventListener("click", closeEventPopup);
 
 document.addEventListener("keydown", (event) => {
   if (!els.eventPopup.classList.contains("hidden")) return;
+  if (!els.terminalOverlay.classList.contains("hidden")) return;
+  if (!els.blackout.classList.contains("hidden")) return;
   if (event.key === " " || event.key === "Enter") {
     if (!els.nextButton.classList.contains("hidden")) advance();
   }
