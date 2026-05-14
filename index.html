@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NovaMind：算法边界</title>
-  <link rel="stylesheet" href="style.css?v=20260514-pacing" />
+  <link rel="stylesheet" href="style.css?v=20260514-interactive" />
 </head>
 <body>
   <main class="game-shell">
@@ -88,6 +88,15 @@
         <div class="character-layer" id="characterLayer"></div>
       </section>
 
+      <div class="event-popup hidden" id="eventPopup" role="dialog" aria-modal="true" aria-labelledby="eventTitle">
+        <div class="event-card">
+          <div class="event-label" id="eventLabel">SYSTEM</div>
+          <h2 id="eventTitle">消息</h2>
+          <p id="eventBody"></p>
+          <button class="next-button" id="eventCloseButton" type="button">关闭</button>
+        </div>
+      </div>
+
       <section class="dialogue-panel">
         <div class="speaker-row">
           <div>
@@ -102,6 +111,6 @@
     </section>
   </main>
 
-  <script src="game.js?v=20260514-pacing"></script>
+  <script src="game.js?v=20260514-interactive"></script>
 </body>
 </html>

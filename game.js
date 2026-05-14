@@ -53,7 +53,15 @@ const nodes = {
     news: "NovaMind 操控用户情绪",
     cast: ["you", "ceo", "qiao", "lin"],
     lines: [
-      { speaker: "media", text: "突发新闻：NovaMind 被曝操控用户情绪，相关内部日志疑似流出。" },
+      {
+        speaker: "media",
+        text: "突发新闻：NovaMind 被曝操控用户情绪，相关内部日志疑似流出。",
+        popup: {
+          label: "NEWS PUSH",
+          title: "热搜第一",
+          body: "NovaMind 操控用户情绪\n\n内部日志、未成年用户案例、AI 数字人依赖问题正在扩散。",
+        },
+      },
       { speaker: "narrator", text: "会议室里所有人的手机都在震。你面前的终端停在一个确认框上：删除实验日志。" },
       { speaker: "ceo", text: "日志是你写的，你最清楚哪一段会被误读。" },
       { speaker: "lin", text: "别碰那个按钮。" },
@@ -74,24 +82,25 @@ const nodes = {
       { speaker: "narrator", text: "入职 NovaMind 的第三个月，你学会了两件事：九点后咖啡机永远排队；写着“小实验”的需求，最后通常都会上线。" },
       { speaker: "lin", text: "你又来这么早。" },
       { speaker: "you", text: "不是早，是昨晚没怎么走。" },
-      { speaker: "lin", text: "哦。那我换个说法。你还活着，挺好。" },
-      { speaker: "you", text: "谢谢，听起来像工伤慰问。" },
       { speaker: "narrator", text: "林澈把一杯冰美式放到你桌边。杯套上印着 NovaMind 的口号：Understand Everyone." },
       { speaker: "you", text: "你怎么知道我喝冰的？" },
-      { speaker: "lin", text: "你上周三说热咖啡像在喝加班费。" },
-      { speaker: "you", text: "我说过这么惨的话？" },
-      { speaker: "lin", text: "你当时在改召回链路，可能不记得了。" },
+      { speaker: "lin", text: "你上周三说热咖啡像在喝加班费。很难忘。" },
       { speaker: "narrator", text: "你打开实验面板。昨晚跑完的新模型结果安静地躺在那里：停留时长上涨，负面反馈也上涨。" },
       { speaker: "you", text: "停留涨了。" },
       { speaker: "lin", text: "嗯。" },
       { speaker: "you", text: "你这个“嗯”不太吉利。" },
       { speaker: "lin", text: "负面反馈也涨了。" },
       { speaker: "you", text: "样本量不大。" },
-      { speaker: "lin", text: "你现在说话越来越像评审会了。" },
-      { speaker: "you", text: "这是夸我适应得快？" },
-      { speaker: "lin", text: "不完全是。" },
-      { speaker: "narrator", text: "他没有继续说，只是用手指轻轻敲了两下纸杯。" },
-      { speaker: "system", text: "异常反馈队列出现新记录：#A-2179。分类：夜间连续使用 / 负面情绪。" },
+      { speaker: "lin", text: "你现在说话越来越像评审会了。别太快习惯。" },
+      {
+        speaker: "system",
+        text: "异常反馈队列出现新记录：#A-2179。分类：夜间连续使用 / 负面情绪。",
+        popup: {
+          label: "PHONE",
+          title: "异常反馈 #A-2179",
+          body: "夜间连续使用 / 负面情绪\n\n用户留言：我明明已经很累了，可它一直推给我那些让我更睡不着的东西。",
+        },
+      },
     ],
     choices: [
       {
@@ -157,18 +166,12 @@ const nodes = {
       { speaker: "qiao", text: "早。" },
       { speaker: "you", text: "乔经理。" },
       { speaker: "qiao", text: "别叫这么正式，听着像你要拒需求。" },
-      { speaker: "you", text: "那我应该叫什么？" },
-      { speaker: "qiao", text: "叫乔岚。或者在我心情好的时候叫岚姐。" },
-      { speaker: "you", text: "现在心情好吗？" },
       { speaker: "narrator", text: "乔岚看了一眼墙上的活跃曲线。红色的下滑箭头像一根没有拔掉的刺。" },
-      { speaker: "qiao", text: "你觉得呢？" },
       { speaker: "qiao", text: "昨晚的实验我看了。不错。" },
       { speaker: "you", text: "负面反馈也涨了。" },
       { speaker: "qiao", text: "我知道。" },
       { speaker: "you", text: "那还不错？" },
-      { speaker: "qiao", text: "你刚来，可能还没见过更难看的曲线。" },
-      { speaker: "you", text: "比如？" },
-      { speaker: "qiao", text: "比如一条产品线从“战略项目”变成“成本中心”。比如一层楼的人，周五还在改需求，周一门禁就失效。" },
+      { speaker: "qiao", text: "你刚来，可能还没见过一条产品线从“战略项目”变成“成本中心”。" },
       { speaker: "narrator", text: "电梯门打开。金属墙映出你们两个模糊的影子。" },
       { speaker: "qiao", text: "我不是吓你。增长不是 PPT 里的词。有时候它是很多人的下个月房租。" },
     ],
@@ -211,26 +214,18 @@ const nodes = {
     lines: [
       { speaker: "qiao", text: "休息五分钟。你喝什么？" },
       { speaker: "you", text: "水就行。" },
-      { speaker: "qiao", text: "新人都这么养生？" },
       { speaker: "you", text: "主要是贵司咖啡喝多了心慌。" },
       { speaker: "qiao", text: "贵司。" },
       { speaker: "you", text: "还没完全产生归属感。" },
       { speaker: "qiao", text: "挺好。产生太快也不一定是好事。" },
-      { speaker: "narrator", text: "她接了一杯热水，没有马上回会议室。纸杯边缘被她捏出一道很浅的折痕。" },
       { speaker: "you", text: "你刚才说会砍预算，是真的？" },
-      { speaker: "qiao", text: "你觉得我像在演？" },
-      { speaker: "you", text: "不像。" },
       { speaker: "qiao", text: "那就是真的。增长组不会消失，只会变小。变小的意思是，有些人会先消失。" },
-      { speaker: "you", text: "……" },
       { speaker: "qiao", text: "我知道林澈是对的。至少一部分是。" },
       { speaker: "you", text: "那为什么不支持他？" },
       { speaker: "qiao", text: "因为他说“不能做”的时候，不需要告诉团队下个月怎么活。" },
-      { speaker: "narrator", text: "她没有看你。她在看纸杯里慢慢散开的热气。" },
       { speaker: "qiao", text: "你别误会，我不是让你做坏人。" },
       { speaker: "you", text: "那你想让我做什么？" },
       { speaker: "qiao", text: "做一个成年人。" },
-      { speaker: "you", text: "成年人就是装作没看见？" },
-      { speaker: "qiao", text: "成年人是知道自己看见了，但还是得选。" },
     ],
     next: "retentionChoice",
   },
@@ -346,19 +341,15 @@ const nodes = {
     lines: [
       { speaker: "narrator", text: "两天后，公司的午餐高峰像一次小型发布会。每张桌子都在讨论曲线、版本、上线时间。" },
       { speaker: "qiao", text: "你们技术组吃饭都这么安静？" },
-      { speaker: "you", text: "一般取决于下午有没有评审。" },
-      { speaker: "lin", text: "也取决于饭好不好吃。" },
-      { speaker: "qiao", text: "那今天应该挺安静的。" },
+      { speaker: "lin", text: "取决于饭好不好吃，和下午有没有评审。" },
       { speaker: "narrator", text: "乔岚把餐盘推到一边。她看起来比前天更累，眼下有很淡的青色。" },
       { speaker: "qiao", text: "第一章那个灰度结果，董事会看到了。别紧张，不是坏消息。" },
       { speaker: "you", text: "一般别人说别紧张的时候，都快出事了。" },
       { speaker: "qiao", text: "只是有个新项目想借你的模型链路。" },
       { speaker: "lin", text: "借？" },
       { speaker: "qiao", text: "合规那边会找他聊。我只提醒一句，别一上来就把人当坏人。" },
-      { speaker: "lin", text: "如果项目没问题，通常不需要提前提醒这个。" },
-      { speaker: "qiao", text: "林澈，你能不能偶尔假装自己适合团队合作？" },
-      { speaker: "lin", text: "我在努力。效果不稳定。" },
-      { speaker: "narrator", text: "你笑了一下。那一秒很短，短到差点让你忘了乔岚刚才避开了项目名字。" },
+      { speaker: "lin", text: "项目没问题的话，通常不需要提前提醒这个。" },
+      { speaker: "narrator", text: "你笑了一下。那一秒很短，短到差点让你忘了乔岚避开了项目名字。" },
     ],
     next: "privacyOfficeHint",
   },
@@ -370,7 +361,15 @@ const nodes = {
     time: "2032 / 18:42",
     cast: ["you", "shen"],
     lines: [
-      { speaker: "system", text: "你收到一封新邮件：用户理解增强项目 - 特征链路接入评审。" },
+      {
+        speaker: "system",
+        text: "你收到一封新邮件：用户理解增强项目 - 特征链路接入评审。",
+        popup: {
+          label: "MAIL",
+          title: "用户理解增强项目",
+          body: "发件人：沈舟\n附件：需求说明 / 合规评估 / 数据流图\n\n备注：请在明早排期前确认链路接入方式。",
+        },
+      },
       { speaker: "narrator", text: "附件名很干净：需求说明、合规评估、数据流图。干净到像特意擦过。" },
       { speaker: "shen", text: "看到了？" },
       { speaker: "you", text: "你站我后面多久了？" },
@@ -597,9 +596,16 @@ const nodes = {
       { speaker: "you", text: "听起来不像简单目标。" },
       { speaker: "qiao", text: "所以才叫你来。" },
       { speaker: "lin", text: "“惦记”这个词，最好别写进需求文档。" },
-      { speaker: "qiao", text: "放心，文档里叫主动陪伴。" },
       { speaker: "narrator", text: "EVA 在屏幕上眨了眨眼。她的声音很柔，柔到你很难把它和指标连接起来。" },
-      { speaker: "system", text: "演示样例：检测到用户连续低情绪状态。EVA：你今天也一个人吗？我一直在。" },
+      {
+        speaker: "system",
+        text: "演示样例：检测到用户连续低情绪状态。EVA：你今天也一个人吗？我一直在。",
+        popup: {
+          label: "EVA DEMO",
+          title: "主动陪伴演示",
+          body: "检测到：连续低情绪表达 / 夜间在线 / 社交回避上升\n\nEVA：你今天也一个人吗？我一直在。",
+        },
+      },
       { speaker: "you", text: "这句谁写的？" },
       { speaker: "qiao", text: "内容团队。" },
       { speaker: "lin", text: "模型会在什么时候触发？" },
@@ -821,7 +827,15 @@ const nodes = {
     cast: ["you", "system"],
     lines: [
       { speaker: "narrator", text: "凌晨一点十四分，办公区的灯自动熄了一半。你准备关电脑时，内网消息跳了出来。" },
-      { speaker: "system", text: "舆情监测：疑似 NovaMind 数字人依赖案例开始外部传播。来源：匿名社交账号。" },
+      {
+        speaker: "system",
+        text: "舆情监测：疑似 NovaMind 数字人依赖案例开始外部传播。来源：匿名社交账号。",
+        popup: {
+          label: "ALERT",
+          title: "舆情异常",
+          body: "匿名账号发布截图：\n“他们知道她停不下来。”\n\n关联关键词：EVA / 未成年 / 情绪操控",
+        },
+      },
       { speaker: "narrator", text: "你点开链接。没有完整证据，只有几张模糊截图，和一句话：他们知道她停不下来。" },
       { speaker: "narrator", text: "你没有马上叫醒任何人。你只是坐在那里，听见空调把夜晚吹得很长。" },
     ],
@@ -859,7 +873,15 @@ const nodes = {
     news: "NovaMind 操控用户情绪",
     cast: ["you", "media", "qiao"],
     lines: [
-      { speaker: "media", text: "热搜第一：NovaMind 操控用户情绪。曝光材料显示，该公司长期诱导成瘾、越界收集隐私，并利用数字人进行情感操控。" },
+      {
+        speaker: "media",
+        text: "热搜第一：NovaMind 操控用户情绪。曝光材料显示，该公司长期诱导成瘾、越界收集隐私，并利用数字人进行情感操控。",
+        popup: {
+          label: "BREAKING",
+          title: "NovaMind 操控用户情绪",
+          body: "曝光材料显示：推荐系统诱导成瘾、越界收集隐私、AI 数字人情感操控。\n\n热度仍在上升。",
+        },
+      },
       { speaker: "narrator", text: "办公区安静得不正常。所有会议室都亮着红灯，所有人都在小声说话。" },
       { speaker: "qiao", text: "公关让我们今晚不要离开公司。" },
       { speaker: "you", text: "这是通知还是建议？" },
@@ -971,6 +993,7 @@ let typingTimer = null;
 let isTyping = false;
 let dialogueHistory = [];
 let evidenceRecords = [];
+let popupCallback = null;
 
 const els = {
   stage: document.getElementById("stage"),
@@ -997,6 +1020,11 @@ const els = {
   profileButton: document.getElementById("profileButton"),
   profileDrawer: document.getElementById("profileDrawer"),
   profileList: document.getElementById("profileList"),
+  eventPopup: document.getElementById("eventPopup"),
+  eventLabel: document.getElementById("eventLabel"),
+  eventTitle: document.getElementById("eventTitle"),
+  eventBody: document.getElementById("eventBody"),
+  eventCloseButton: document.getElementById("eventCloseButton"),
 };
 
 function clamp(value) {
@@ -1083,6 +1111,31 @@ function addEvidence(item) {
   renderEvidence();
 }
 
+function showEventPopup(popup, onClose) {
+  els.eventLabel.textContent = popup.label || "SYSTEM";
+  els.eventTitle.textContent = popup.title || "消息";
+  els.eventBody.textContent = popup.body || "";
+  els.eventPopup.classList.remove("hidden");
+  popupCallback = onClose;
+  if (popup.evidenceItem) addEvidence(popup.evidenceItem);
+}
+
+function closeEventPopup() {
+  if (els.eventPopup.classList.contains("hidden")) return;
+  els.eventPopup.classList.add("hidden");
+  const callback = popupCallback;
+  popupCallback = null;
+  if (callback) callback();
+}
+
+function revealAfterLine() {
+  if (lineIndex < current.lines.length - 1) {
+    els.nextButton.classList.remove("hidden");
+  } else {
+    renderChoices();
+  }
+}
+
 function renderEvidence() {
   els.evidenceList.innerHTML = "";
   if (evidenceRecords.length === 0) {
@@ -1136,10 +1189,10 @@ function typeLine(line) {
       clearInterval(typingTimer);
       isTyping = false;
       addHistory(line);
-      if (lineIndex < current.lines.length - 1) {
-        els.nextButton.classList.remove("hidden");
+      if (line.popup) {
+        showEventPopup(line.popup, revealAfterLine);
       } else {
-        renderChoices();
+        revealAfterLine();
       }
     }
   }, 24);
@@ -1221,16 +1274,17 @@ function startNode(rawNode) {
 }
 
 function advance() {
+  if (!els.eventPopup.classList.contains("hidden")) return;
   if (isTyping) {
     clearInterval(typingTimer);
     const line = current.lines[lineIndex];
     els.dialogueText.textContent = line.text;
     isTyping = false;
     addHistory(line);
-    if (lineIndex < current.lines.length - 1) {
-      els.nextButton.classList.remove("hidden");
+    if (line.popup) {
+      showEventPopup(line.popup, revealAfterLine);
     } else {
-      renderChoices();
+      revealAfterLine();
     }
     return;
   }
@@ -1280,8 +1334,10 @@ els.statsButton.addEventListener("click", () => toggleDrawer(els.statsDrawer, el
 els.evidenceButton.addEventListener("click", () => toggleDrawer(els.evidenceDrawer, els.evidenceButton));
 els.historyButton.addEventListener("click", () => toggleDrawer(els.historyDrawer, els.historyButton));
 els.profileButton.addEventListener("click", () => toggleDrawer(els.profileDrawer, els.profileButton));
+els.eventCloseButton.addEventListener("click", closeEventPopup);
 
 document.addEventListener("keydown", (event) => {
+  if (!els.eventPopup.classList.contains("hidden")) return;
   if (event.key === " " || event.key === "Enter") {
     if (!els.nextButton.classList.contains("hidden")) advance();
   }
