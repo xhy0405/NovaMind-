@@ -33,11 +33,15 @@ flowchart TD
   BWait --> BMain
 
   BMain -->|参与接入| BJoin["加入后台画像<br/>隐私安全- / 标记：privacyJoined"]
+  BMain -->|高刺激路线解锁| BProfile["后台画像给高刺激策略降噪<br/>利润+ / 隐私安全--<br/>标记：highStimulusProfiled"]
   BMain -->|拒绝并要求最小化| BRefuse["拒绝接入<br/>隐私安全+ / 标记：privacyRefused"]
+  BMain -->|健康模式解锁| BSandbox["端侧健康信号沙盒<br/>隐私安全+ / 证据+<br/>标记：localPrivacySandbox"]
   BMain -->|匿名提交监管| BReport["触发监管线<br/>证据+ / 沈舟警惕++<br/>标记：privacyReported"]
 
   BJoin --> C1["第三章：EVA<br/>数字人情感召回"]
+  BProfile --> C1
   BRefuse --> C1
+  BSandbox --> C1
   BReport --> C1
 
   C1 --> C1S{"小选择：EVA 演示中如何反应"}
@@ -50,13 +54,17 @@ flowchart TD
   CSilent --> CMain
 
   CMain -->|优化情感依赖| CDepend["EVA 更会挽留用户<br/>利润++ / 夏知遥状态-<br/>标记：dependenceOptimized"]
+  CMain -->|画像降噪路线解锁| CContain["静默陪伴名单<br/>舆情风险短降 / 夏知遥状态-<br/>标记：dependenceOptimized"]
   CMain -->|上线防沉迷| CAnti["EVA 学会告别<br/>幸福度+ / 标记：antiAddiction"]
   CMain -->|公开风险报告| CPublishReport["风险报告流出<br/>证据++ / 标记：reportPublished"]
+  CMain -->|监管线解锁| CSuspend["暂停 EVA 二期复核<br/>证据+ / 夏知遥状态+<br/>标记：evaSuspended"]
   CMain -->|健康EVA 条件解锁| CHealthy["健康推荐接入 EVA<br/>夏知遥状态++ / 证据+<br/>标记：usedHealthyForEva"]
 
   CDepend --> D1["第四章：回声协议曝光"]
+  CContain --> D1
   CAnti --> D1
   CPublishReport --> D1
+  CSuspend --> D1
   CHealthy --> D1
 
   D1 --> DMain{"最终选择：战情室"}
@@ -65,9 +73,13 @@ flowchart TD
   DMain -->|公开资料| EPublish{"公开后结算"}
   DMain -->|乔岚协助<br/>条件解锁| EQiao["乔岚拖住公关<br/>转移证据"]
   DMain -->|监管联系人<br/>条件解锁| EReg["同步给监管"]
+  DMain -->|替代方案证据<br/>条件解锁| EAlt["公开端侧沙盒 + 健康 EVA"]
+  DMain -->|EVA暂停记录<br/>条件解锁| ESuspend["最小必要证据保护用户"]
 
   EQiao --> EPreserve
   EReg --> EPreserve
+  EAlt --> EPublish
+  ESuspend --> EPreserve
 
   EDelete -->|利润优先多且伦理风险高| EndSystem["隐藏结局：系统的一部分"]
   EDelete -->|否则| EndSilent["结局：沉默的工程师"]
@@ -118,7 +130,9 @@ flowchart TD
 
   B6 --> B7{"隐私画像选择"}
   B7 -->|参与接入| B8["privacyJoined<br/>第三章：夏知遥画像更精准<br/>第四章：你卷入隐私证据链"]
+  B7 -->|高刺激路线解锁：画像降噪| B11["highStimulusProfiled<br/>第三章：EVA 继承风险分层<br/>第四章：高刺激与隐私证据链合并"]
   B7 -->|拒绝接入| B9["privacyRefused<br/>第三章：能看到部分画像来源<br/>最终更易保留证据"]
+  B7 -->|健康模式解锁：端侧沙盒| B12["localPrivacySandbox<br/>第三章：EVA 可接入健康信号<br/>最终可公开替代方案"]
   B7 -->|匿名监管| B10["privacyReported<br/>第四章解锁监管联系人<br/>但沈舟警惕大幅上升"]
 ```
 
@@ -138,8 +152,10 @@ flowchart TD
 
   C5 --> C6{"EVA 策略选择"}
   C6 -->|优化情感依赖| C7["dependenceOptimized<br/>夏知遥状态-<br/>第四章媒体曝光高孤独召回"]
+  C6 -->|画像降噪路线解锁| C11["静默陪伴名单<br/>夏知遥状态-<br/>第四章曝光“风险分类”"]
   C6 -->|防沉迷机制| C8["antiAddiction<br/>夏知遥状态+<br/>第四章成为补救证据"]
   C6 -->|公开风险报告| C9["reportPublished<br/>危机提前爆发<br/>证据++"]
+  C6 -->|监管线解锁| C12["evaSuspended<br/>暂停二期复核<br/>第四章可用暂停记录保护用户"]
   C6 -->|健康EVA<br/>需第一章健康模式| C10["usedHealthyForEva<br/>夏知遥状态++<br/>第四章证明有替代方案"]
 ```
 
@@ -169,6 +185,12 @@ flowchart TD
 
   D2 -->|监管联系人<br/>privacyReported 且证据>=30| D7["同步给监管"]
   D7 --> D4
+
+  D2 -->|替代方案证据<br/>localPrivacySandbox + usedHealthyForEva| D8["公开端侧沙盒和健康 EVA"]
+  D8 --> D5
+
+  D2 -->|暂停记录<br/>evaSuspended + 林澈信任| D9["最小必要证据保护夏知遥"]
+  D9 --> D4
 ```
 
 ## 关键状态影响表
@@ -178,7 +200,9 @@ flowchart TD
 | 查看 #A-2179 | 第三章提前认出夏知遥线索，证据增加 |
 | 忽略 #A-2179 | 第三章才知道编号含义，代入感更像“错过” |
 | 高刺激推荐 | 第二章乔岚更信任，第三章夏知遥状态恶化，第四章成为证据链 |
+| 高刺激 + 后台画像降噪 | 第三章解锁静默陪伴名单，第四章高刺激与隐私证据链合并 |
 | 健康推荐模式 | 第三章解锁健康EVA，第四章成为替代方案证据 |
+| 健康推荐 + 端侧沙盒 | 第四章解锁“公开替代方案”路线，更容易进入理想主义者结局 |
 | 查看隐私数据流 | 第二章可质问沈舟，证据增加 |
 | 转发林澈 | 林澈介入更早，但沈舟警惕增加 |
 | 参与隐私画像 | 第三章夏知遥画像更精准，第四章玩家卷入隐私证据链 |
@@ -186,6 +210,7 @@ flowchart TD
 | 匿名监管 | 第四章解锁监管联系人，但被公司警惕 |
 | 追问EVA触发条件 | 证据增加，第四章可指向高孤独召回 |
 | 优化情感依赖 | 夏知遥状态下降，系统结局/证人结局概率提高 |
+| 静默陪伴名单 | 短期降低外溢风险，但增加第四章“知道风险仍继续”的证据 |
 | 防沉迷机制 | 夏知遥状态改善，第四章成为补救证据 |
+| 暂停 EVA 二期复核 | 第四章可用暂停记录保护用户，更容易进入理想主义者结局 |
 | 公开风险报告 | 危机提前爆发，证据增加，乔岚信任下降 |
-

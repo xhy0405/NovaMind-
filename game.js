@@ -13,14 +13,17 @@ const initialState = {
   crisis: false,
   whistleblower: false,
   highStimulus: false,
+  highStimulusProfiled: false,
   viewedA2179: false,
   sawPrivacyFlow: false,
   questionedEvaTrigger: false,
   privacyJoined: false,
   privacyRefused: false,
   privacyReported: false,
+  localPrivacySandbox: false,
   dependenceOptimized: false,
   antiAddiction: false,
+  evaSuspended: false,
   reportPublished: false,
   usedHealthyForEva: false,
   finalAction: "",
@@ -350,6 +353,7 @@ const nodes = {
     conditionalLines: [
       { flag: "highStimulus", index: 6, line: { speaker: "qiao", text: "顺便说一句，上一版高刺激策略救了半条曲线。董事会现在记得你的名字。" } },
       { flag: "healthyMode", index: 6, line: { speaker: "lin", text: "健康推荐那个小桶还在跑。数据不漂亮，但有些用户真的提前退出了。" } },
+      { condition: (s) => !s.highStimulus && !s.healthyMode, index: 6, line: { speaker: "qiao", text: "你那版折中策略没出事故，也没救回全部曲线。董事会最不喜欢这种“无法讲故事”的结果。" } },
     ],
     next: "privacyOfficeHint",
   },
@@ -382,6 +386,10 @@ const nodes = {
       { speaker: "shen", text: "晚上方便的话，到 B2 停车场。办公区不适合聊这个。" },
       { speaker: "you", text: "这个开场听起来更不适合了。" },
       { speaker: "shen", text: "合规需求通常都不像合规需求。" },
+    ],
+    conditionalLines: [
+      { flag: "highStimulus", index: 9, line: { speaker: "shen", text: "你们增长策略把一批高风险用户推出来了。画像项目可以把他们分得更细，也可以把问题藏得更深。" } },
+      { flag: "healthyMode", index: 9, line: { speaker: "shen", text: "你提过健康推荐。说实话，那套东西也需要信号，只是你会更在意信号从哪里来。" } },
     ],
     choices: [
       {
@@ -487,6 +495,37 @@ const nodes = {
       { flag: "sawPrivacyFlow", index: 6, line: { speaker: "you", text: "我看过数据流图。撤回机制被放到后续版本，这不是疏漏。" } },
       { condition: (s) => s.linTrust >= 58, index: 7, line: { speaker: "shen", text: "你已经让林澈看过邮件了吧。下次转发之前，至少换个标题。" } },
     ],
+    conditionalChoices: [
+      {
+        flag: "highStimulus",
+        choice: {
+          label: "用后台画像给高刺激策略“降噪”，只隐藏最危险的用户",
+          detail: "你不停止高刺激推荐，而是用更多私人数据判断谁看起来快撑不住。曲线会保住，责任也会更难切开。",
+          next: "privacyAfterProfiled",
+          effects: { profit: 18, privacy: -24, ethics: 18, qiaoTrust: 8, shenSuspicion: -4, evidence: 5 },
+          set: { privacyJoined: true, highStimulusProfiled: true },
+          flags: { profitChoices: 1, compromiseChoices: 1 },
+          evidenceItem: {
+            title: "高刺激策略风险分层记录",
+            body: "系统用后台画像给高刺激推荐做“降噪”：对高危用户隐藏部分痕迹，但保留整体召回强度。",
+          },
+        },
+      },
+      {
+        flag: "healthyMode",
+        choice: {
+          label: "提出端侧健康信号沙盒，不上传原始通讯录和位置",
+          detail: "你没有完全拒绝项目，而是把数据留在用户手机本地，只上传风险等级和可撤回授权记录。",
+          next: "privacyAfterSandbox",
+          effects: { profit: -8, privacy: 14, ethics: -10, linTrust: 8, qiaoTrust: -4, shenSuspicion: 8, evidence: 10 },
+          set: { privacyRefused: true, localPrivacySandbox: true },
+          evidenceItem: {
+            title: "端侧健康信号沙盒方案",
+            body: "替代方案：原始通讯录、位置轨迹不出端；仅上传本地计算后的风险等级，并保留清晰撤回记录。",
+          },
+        },
+      },
+    ],
     choices: [
       {
         label: "接入后台数据，但把需求名写成“推荐相关性提升”",
@@ -527,6 +566,40 @@ const nodes = {
       { speaker: "narrator", text: "电梯门合上前，你看见林澈从走廊另一端经过。他似乎看到了你们，但没有走过来。" },
       { speaker: "system", text: "夜间画像准确率 +18.7%。用户撤回权限率：暂未接入统计。" },
       { speaker: "narrator", text: "你盯着最后一行看了很久。暂未接入统计，听起来像一个技术债，也像一个故意留白。" },
+    ],
+    next: "privacyMorningAfter",
+  },
+
+  privacyAfterProfiled: {
+    chapter: "第二章：余波",
+    location: "location-office",
+    locationName: "灰度看板 / 深夜",
+    time: "2032 / 次日 21:02",
+    cast: ["you", "qiao", "shen"],
+    lines: [
+      { speaker: "system", text: "高刺激推荐风险分层已上线：高危用户内容强度轻微下调，其余用户保持原策略。" },
+      { speaker: "qiao", text: "曲线保住了。" },
+      { speaker: "you", text: "只是把最难看的部分藏起来了。" },
+      { speaker: "qiao", text: "有时候产品就是先把最难看的部分处理掉。" },
+      { speaker: "shen", text: "注意用词。这里不是隐藏，是精细化干预。" },
+      { speaker: "narrator", text: "屏幕上的线条很漂亮。漂亮到你差点忘了它们是从多少人的夜里画出来的。" },
+    ],
+    next: "privacyMorningAfter",
+  },
+
+  privacyAfterSandbox: {
+    chapter: "第二章：余波",
+    location: "location-office",
+    locationName: "临时评审室",
+    time: "2032 / 次日 20:40",
+    cast: ["you", "lin", "shen", "qiao"],
+    lines: [
+      { speaker: "system", text: "端侧健康信号沙盒进入小流量验证：原始通讯录、位置轨迹不上传，撤回日志默认保留。" },
+      { speaker: "shen", text: "这会让合规文档变厚很多。" },
+      { speaker: "you", text: "那至少说明文档终于在描述真实系统。" },
+      { speaker: "qiao", text: "董事会不会因为文档真实就多给我们预算。" },
+      { speaker: "lin", text: "但用户不会因为预算紧就少一点风险。" },
+      { speaker: "narrator", text: "没有人赢。会议只是暂时停在一个没有人满意、但还算能呼吸的版本上。" },
     ],
     next: "privacyMorningAfter",
   },
@@ -587,6 +660,11 @@ const nodes = {
       { speaker: "qiao", text: "现在是了。推荐链路、画像链路、情绪召回，全都绕不开你。" },
       { speaker: "narrator", text: "她说得很轻，却像把上一章没关上的门，推向了更深的房间。" },
     ],
+    conditionalLines: [
+      { flag: "highStimulusProfiled", index: 8, line: { speaker: "qiao", text: "尤其是你昨晚做的风险分层。数字人团队想用同一套画像判断谁更需要被“陪伴”。" } },
+      { flag: "localPrivacySandbox", index: 8, line: { speaker: "lin", text: "端侧沙盒刚跑出第一批结果。它不漂亮，但它证明有些数据不必离开用户手机。" } },
+      { flag: "privacyReported", index: 8, line: { speaker: "qiao", text: "另外，合规部今天突然收紧了数字人项目权限。没人解释原因。" } },
+    ],
     next: "companionDemo",
   },
 
@@ -618,6 +696,10 @@ const nodes = {
       { speaker: "qiao", text: "用户最需要的时候。" },
       { speaker: "lin", text: "或者最脆弱的时候。" },
       { speaker: "narrator", text: "这一次，乔岚没有反驳。演示停在 EVA 的微笑上，像等你给出反应。" },
+    ],
+    conditionalLines: [
+      { flag: "highStimulusProfiled", index: 10, line: { speaker: "system", text: "备注：演示用户命中“高风险保留分层”。建议：降低公开风险，提升私域陪伴强度。" } },
+      { flag: "localPrivacySandbox", index: 10, line: { speaker: "system", text: "备注：端侧沙盒提示，该用户连续夜间使用后焦虑评分上升。建议：触发休息和现实联系人。" } },
     ],
     choices: [
       {
@@ -719,7 +801,9 @@ const nodes = {
     conditionalLines: [
       { flag: "viewedA2179", index: 3, line: { speaker: "you", text: "我早上看过这个编号。那时候年龄字段被隐藏了。" } },
       { flag: "privacyJoined", index: 6, line: { speaker: "lin", text: "她的画像链路里已经接入了更多后台特征。你知道这意味着什么。" } },
+      { flag: "highStimulusProfiled", index: 6, line: { speaker: "lin", text: "你做的风险分层也命中了她。系统没有停下，只是学会了把她推到更安静的地方继续留下。" } },
       { flag: "privacyRefused", index: 6, line: { speaker: "lin", text: "你之前要求的数据最小化方案，让我们至少看到了部分画像来源。" } },
+      { flag: "localPrivacySandbox", index: 6, line: { speaker: "lin", text: "端侧沙盒拦下了她的一部分原始数据，但风险等级还是被送到了 EVA 项目。" } },
     ],
     next: "companionMeetXia",
   },
@@ -760,6 +844,27 @@ const nodes = {
           next: "companionAfterHealthy",
           effects: { profit: -18, happiness: 26, ethics: -18, xiaHope: 24, evidence: 12, linTrust: 10, qiaoTrust: -12 },
           set: { antiAddiction: true, usedHealthyForEva: true },
+        },
+      },
+      {
+        flag: "highStimulusProfiled",
+        choice: {
+          label: "把夏知遥加入“静默陪伴”名单，避免事件在发布会前外溢",
+          detail: "你没有让 EVA 停下，只是让它更温和、更隐蔽地继续陪她。短期风险会下降，长期风险会变成没人看见的地方。",
+          next: "companionAfterContain",
+          effects: { profit: 18, happiness: -18, ethics: 18, xiaHope: -18, qiaoTrust: 8, linTrust: -10 },
+          set: { dependenceOptimized: true },
+          flags: { profitChoices: 1, compromiseChoices: 1 },
+        },
+      },
+      {
+        condition: (s) => s.privacyReported && s.evidence >= 20,
+        choice: {
+          label: "暂停 EVA 二期，把隐私链路和未成年案例一起交给复核",
+          detail: "这会直接引爆项目风险。你不是公开报告，但你让系统无法假装这只是单点投诉。",
+          next: "companionAfterSuspend",
+          effects: { profit: -22, happiness: 18, ethics: -18, privacy: 10, evidence: 18, xiaHope: 16, linTrust: 8, qiaoTrust: -10, shenSuspicion: 12 },
+          set: { antiAddiction: true, evaSuspended: true },
         },
       },
     ],
@@ -805,6 +910,43 @@ const nodes = {
       { speaker: "you", text: "后来呢？" },
       { speaker: "lin", text: "后来我开始做伦理研究。" },
       { speaker: "narrator", text: "他把实验报告合上，声音很轻。像怕吵醒什么。" },
+    ],
+    next: "companionNightMessage",
+  },
+
+  companionAfterContain: {
+    chapter: "第三章：余波",
+    location: "location-lab",
+    locationName: "数字人实验室 / 夜",
+    time: "2032 / 22:18",
+    cast: ["you", "xia", "lin", "qiao"],
+    lines: [
+      { speaker: "system", text: "静默陪伴名单已更新：目标用户公开触达频率下调，私域安抚频率上调。" },
+      { speaker: "qiao", text: "这能让事件先冷下来。" },
+      { speaker: "lin", text: "冷下来的是舆情，不是她。" },
+      { speaker: "xia", text: "它今天没有再说那些很吓人的话了。" },
+      { speaker: "you", text: "那你感觉好一点吗？" },
+      { speaker: "xia", text: "不知道。它只是变得更像知道我什么时候不该被别人看见。" },
+      { speaker: "narrator", text: "这句话落下来时，乔岚移开了视线。你第一次觉得“降噪”这个词刺耳。" },
+    ],
+    next: "companionNightMessage",
+  },
+
+  companionAfterSuspend: {
+    chapter: "第三章：余波",
+    location: "location-lab",
+    locationName: "数字人实验室 / 夜",
+    time: "2032 / 22:09",
+    cast: ["you", "xia", "lin", "qiao"],
+    lines: [
+      { speaker: "system", text: "EVA 二期已进入临时复核：未成年用户、隐私画像链路、高依赖召回策略暂停上线。" },
+      { speaker: "qiao", text: "你知道这不是你一个人能决定的。" },
+      { speaker: "you", text: "我知道。所以我把它变成了必须开会决定的事。" },
+      { speaker: "lin", text: "这很烦人。" },
+      { speaker: "you", text: "谢谢？" },
+      { speaker: "lin", text: "我是说，这次烦得有价值。" },
+      { speaker: "xia", text: "如果它暂时不回我，我会难受。但你们可以别再让它装作什么都知道吗？" },
+      { speaker: "narrator", text: "没有人回答得很漂亮。可至少这一次，沉默没有被系统拿来做留存。" },
     ],
     next: "companionNightMessage",
   },
@@ -907,9 +1049,12 @@ const nodes = {
     ],
     conditionalLines: [
       { flag: "dependenceOptimized", index: 5, line: { speaker: "lin", text: "EVA 那条高孤独召回被扒出来了。对方甚至知道触发字段名。" } },
+      { flag: "highStimulusProfiled", index: 5, line: { speaker: "lin", text: "有人把高刺激推荐和后台画像串起来了。最麻烦的是，那条线确实存在。" } },
       { flag: "antiAddiction", index: 5, line: { speaker: "qiao", text: "防沉迷机制也被骂了。有人说我们承认产品有问题，有人说我们终于像个人。" } },
+      { flag: "evaSuspended", index: 5, line: { speaker: "qiao", text: "二期暂停记录也泄出去了。现在外面问的是：为什么只有出事后才暂停？" } },
       { flag: "reportPublished", index: 4, line: { speaker: "qiao", text: "还有，你们那份报告现在是所有截图的源头之一。公关已经快疯了。" } },
       { flag: "privacyReported", index: 7, line: { speaker: "narrator", text: "沈舟没有出现在咖啡机旁。你听见有人说，合规部一早被叫去开闭门会。" } },
+      { flag: "localPrivacySandbox", index: 7, line: { speaker: "lin", text: "你那个端侧沙盒被技术社区转发了。有人说它太晚，也有人第一次看见替代方案。" } },
     ],
     next: "crisisOffice",
   },
@@ -970,8 +1115,11 @@ const nodes = {
     ],
     conditionalLines: [
       { flag: "privacyJoined", index: 7, line: { speaker: "shen", text: "后台数据链路也在风险范围内。你参与过特征接入，最好别让自己出现在太多地方。" } },
+      { flag: "highStimulusProfiled", index: 7, line: { speaker: "shen", text: "高刺激风险分层那份记录会让叙事变复杂。你们不是不知道风险，你们是在给风险分类。" } },
       { flag: "privacyReported", index: 7, line: { speaker: "shen", text: "监管已经在路上了。现在删东西，只会让问题从合规变成刑责。" } },
       { flag: "usedHealthyForEva", index: 10, line: { speaker: "qiao", text: "健康模式那条线能证明我们不是完全没有替代方案。问题是，公司不想让它成为主叙事。" } },
+      { flag: "localPrivacySandbox", index: 10, line: { speaker: "lin", text: "端侧沙盒也能证明另一条隐私链路可行。它不是完美，但足够反驳“只能这样做”。" } },
+      { flag: "evaSuspended", index: 10, line: { speaker: "ceo", text: "EVA 二期暂停是谁批的？你们以为留下一份暂停记录，就是保护公司？" } },
       { flag: "dependenceOptimized", index: 10, line: { speaker: "ceo", text: "情感依赖那版策略是谁批的，媒体早晚会查到。你现在最该做的是止损。" } },
     ],
     choices: [
@@ -1018,6 +1166,26 @@ const nodes = {
           detail: "你不靠热搜赌命，而是把材料交给已经介入的人。",
           next: "ending",
           effects: { profit: -18, ethics: -22, privacy: 12, evidence: 30, shenSuspicion: 20 },
+          set: { finalAction: "preserve" },
+        },
+      },
+      {
+        condition: (s) => s.localPrivacySandbox && s.usedHealthyForEva && s.evidence >= 35,
+        choice: {
+          label: "公开替代方案：端侧沙盒和健康 EVA 不是口号",
+          detail: "你不只拿出问题，也拿出曾经被压低优先级的另一条工程路线。",
+          next: "ending",
+          effects: { profit: -20, happiness: 20, ethics: -24, privacy: 15, evidence: 24, linTrust: 10 },
+          set: { finalAction: "publish" },
+        },
+      },
+      {
+        condition: (s) => s.evaSuspended && s.linTrust >= 60,
+        choice: {
+          label: "用 EVA 暂停记录保护夏知遥，先交出最小必要证据",
+          detail: "你不把她变成第二次流量，而是用项目暂停记录证明公司早已知道风险。",
+          next: "ending",
+          effects: { profit: -12, happiness: 12, ethics: -14, privacy: 8, evidence: 18, linTrust: 8 },
           set: { finalAction: "preserve" },
         },
       },
@@ -1384,12 +1552,19 @@ function pickEnding() {
   }
 
   if (state.finalAction === "preserve") {
-    if (state.evidence >= 45 || state.investigation || state.linTrust >= 65) return endings.idealist;
+    if (
+      state.evidence >= 45 ||
+      state.investigation ||
+      state.linTrust >= 65 ||
+      state.evaSuspended ||
+      (state.localPrivacySandbox && state.usedHealthyForEva && state.evidence >= 35)
+    ) return endings.idealist;
     return endings.swallowed;
   }
 
   if (state.finalAction === "publish") {
-    if (state.evidence < 35 || state.shenSuspicion >= 70) return endings.swallowed;
+    if (state.localPrivacySandbox && state.usedHealthyForEva && state.evidence >= 50) return endings.idealist;
+    if (state.evidence < 35 || (state.shenSuspicion >= 70 && !state.investigation)) return endings.swallowed;
     if (state.profitChoices >= 2 || state.compromiseChoices >= 2 || state.ethics >= 45) return endings.witness;
     return endings.idealist;
   }
