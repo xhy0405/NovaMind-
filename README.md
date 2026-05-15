@@ -10,6 +10,7 @@
 
 - [详细剧情流程案](STORY_FLOW.md)
 - [多分支剧情流程图](BRANCH_FLOW.md)
+- [当前完整剧情脚本文档](FULL_SCRIPT.md)
 
 ## GitHub Pages
 
