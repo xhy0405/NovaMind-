@@ -93,11 +93,11 @@ const nodes = {
       { speaker: "lin", text: "你现在说话越来越像评审会了。别太快习惯。" },
       {
         speaker: "system",
-        text: "异常反馈队列出现新记录：#A-2179。分类：夜间连续使用 / 负面情绪。",
+        text: "手机屏幕亮了一下。异常反馈队列出现新记录。",
         popup: {
           label: "PHONE",
-          title: "异常反馈 #A-2179",
-          body: "夜间连续使用 / 负面情绪\n\n用户留言：我明明已经很累了，可它一直推给我那些让我更睡不着的东西。",
+          title: "异常用户反馈 #A-2179",
+          body: "新记录已进入异常反馈队列。\n\n正文已折叠。点开详情后可查看完整内容。",
         },
       },
     ],
@@ -283,7 +283,15 @@ const nodes = {
       { speaker: "lin", text: "那你应该高兴。" },
       { speaker: "you", text: "嗯。" },
       { speaker: "lin", text: "你这个“嗯”也不太吉利。" },
-      { speaker: "system", text: "异常用户反馈 #A-2179：我不想再看这些了，但我停不下来。我是不是太没自制力了？" },
+      {
+        speaker: "system",
+        text: "屏幕右下角再次弹出同一个编号。它没有声音，却让办公室显得更安静。",
+        popup: {
+          label: "PHONE",
+          title: "异常用户反馈 #A-2179",
+          body: "重复反馈已进入异常反馈队列。\n\n正文已折叠。该记录与本次高刺激灰度实验相关。",
+        },
+      },
     ],
     next: "privacyWarmup",
   },
@@ -304,7 +312,15 @@ const nodes = {
       { speaker: "you", text: "你现在说话能不能偶尔提供一点情绪价值？" },
       { speaker: "lin", text: "可以。三天虽然紧，但至少不是零天。" },
       { speaker: "you", text: "谢谢，有被安慰到一点点。" },
-      { speaker: "system", text: "异常用户反馈 #A-2179：我明明已经很累了，可它一直推给我那些让我更睡不着的东西。" },
+      {
+        speaker: "system",
+        text: "异常反馈队列刷新。熟悉的编号停在列表最上方。",
+        popup: {
+          label: "PHONE",
+          title: "异常用户反馈 #A-2179",
+          body: "重复反馈已进入异常反馈队列。\n\n正文已折叠。当前策略仍在灰度观察中。",
+        },
+      },
     ],
     next: "privacyWarmup",
   },
@@ -326,7 +342,15 @@ const nodes = {
       { speaker: "you", text: "你以前也是程序员。" },
       { speaker: "lin", text: "所以我是在进行经验复用。接口文档发我。" },
       { speaker: "narrator", text: "你们没有再谈伦理，也没有谈公司。只是拆开筷子，盯着屏幕上缓慢滚动的日志。" },
-      { speaker: "system", text: "异常用户反馈 #A-2179：我明明已经很累了，可它一直推给我那些让我更睡不着的东西。" },
+      {
+        speaker: "system",
+        text: "健康推荐小流量桶的监控面板旁，异常反馈队列也亮起了红点。",
+        popup: {
+          label: "PHONE",
+          title: "异常用户反馈 #A-2179",
+          body: "重复反馈已进入异常反馈队列。\n\n正文已折叠。健康推荐策略尚未覆盖该用户。",
+        },
+      },
     ],
     next: "privacyWarmup",
   },
@@ -367,11 +391,11 @@ const nodes = {
     lines: [
       {
         speaker: "system",
-        text: "你收到一封新邮件：用户理解增强项目 - 特征链路接入评审。",
+        text: "内网邮箱弹出一条新通知。",
         popup: {
           label: "MAIL",
           title: "用户理解增强项目",
-          body: "发件人：沈舟\n附件：需求说明 / 合规评估 / 数据流图\n\n备注：请在明早排期前确认链路接入方式。",
+          body: "发件人：沈舟\n主题：特征链路接入评审\n\n附件内容已折叠。打开数据流图后可查看字段细节。",
         },
       },
       { speaker: "narrator", text: "附件名很干净：需求说明、合规评估、数据流图。干净到像特意擦过。" },
@@ -683,11 +707,11 @@ const nodes = {
       { speaker: "narrator", text: "EVA 在屏幕上眨了眨眼。她的声音很柔，柔到你很难把它和指标连接起来。" },
       {
         speaker: "system",
-        text: "演示样例：检测到用户连续低情绪状态。EVA：你今天也一个人吗？我一直在。",
+        text: "演示屏弹出一条自动触发记录。EVA 的头像在右侧亮起。",
         popup: {
           label: "EVA DEMO",
           title: "主动陪伴演示",
-          body: "检测到：连续低情绪表达 / 夜间在线 / 社交回避上升\n\nEVA：你今天也一个人吗？我一直在。",
+          body: "状态：已触发主动陪伴\n\n触发条件与完整话术已折叠。追问触发条件后可查看。",
         },
       },
       { speaker: "you", text: "这句谁写的？" },
@@ -741,7 +765,15 @@ const nodes = {
       { speaker: "lin", text: "这是夸奖。" },
       { speaker: "qiao", text: "不完全是。" },
       { speaker: "system", text: "触发样例：夜间在线、低情绪表达、现实社交下降、高依赖倾向。" },
-      { speaker: "narrator", text: "你看见“高依赖倾向”四个字时，屏幕右下角跳出一个熟悉的编号：A-2179。" },
+      {
+        speaker: "system",
+        text: "你看见“高依赖倾向”四个字时，屏幕右下角跳出一个熟悉的编号。",
+        popup: {
+          label: "EVA DEMO",
+          title: "关联用户 #A-2179",
+          body: "状态：命中高依赖倾向 / EVA 二期样本\n\n用户详情已折叠。继续剧情后可查看危机单摘要。",
+        },
+      },
     ],
     next: "companionUserShadow",
   },
@@ -773,7 +805,15 @@ const nodes = {
       { speaker: "qiao", text: "怎么，都等我当坏人？" },
       { speaker: "lin", text: "没人说你是坏人。" },
       { speaker: "qiao", text: "那就更麻烦了。坏人至少好处理。" },
-      { speaker: "narrator", text: "她把演示切到下一页。用户编号列表一闪而过，你看见了 A-2179。" },
+      {
+        speaker: "system",
+        text: "乔岚把演示切到下一页。用户编号列表一闪而过，右下角弹出关联提示。",
+        popup: {
+          label: "EVA DEMO",
+          title: "关联用户 #A-2179",
+          body: "状态：进入 EVA 二期样本池\n\n用户详情已折叠。当前权限不足以直接展开。",
+        },
+      },
     ],
     next: "companionUserShadow",
   },
@@ -1014,11 +1054,11 @@ const nodes = {
       { speaker: "narrator", text: "凌晨一点十四分，办公区的灯自动熄了一半。你准备关电脑时，内网消息跳了出来。" },
       {
         speaker: "system",
-        text: "舆情监测：疑似 NovaMind 数字人依赖案例开始外部传播。来源：匿名社交账号。",
+        text: "内网舆情监测跳出红色提示。凌晨的办公室被它照亮了一瞬。",
         popup: {
           label: "ALERT",
           title: "舆情异常",
-          body: "匿名账号发布截图：\n“他们知道她停不下来。”\n\n关联关键词：EVA / 未成年 / 情绪操控",
+          body: "疑似 NovaMind 数字人依赖案例开始外部传播。\n\n来源与截图内容已折叠。点开链接后可查看。",
         },
       },
       { speaker: "narrator", text: "你点开链接。没有完整证据，只有几张模糊截图，和一句话：他们知道她停不下来。" },
@@ -1073,7 +1113,7 @@ const nodes = {
         popup: {
           label: "BREAKING",
           title: "NovaMind 操控用户情绪",
-          body: "曝光材料显示：推荐系统诱导成瘾、越界收集隐私、AI 数字人情感操控。\n\n热度仍在上升。",
+          body: "热搜第一。多家媒体正在跟进。\n\n详细曝光材料已折叠，新闻正文将在后续对话中展开。",
         },
       },
       { speaker: "narrator", text: "办公区安静得不正常。所有会议室都亮着红灯，所有人都在小声说话。" },
