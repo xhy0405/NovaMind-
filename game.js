@@ -1407,26 +1407,16 @@ const choiceFlowStages = [
   },
 ];
 
-const choiceFlowEdges = [
+const conditionalFlowEdges = [
   ["choice:提出健康推荐模式，重做一个小流量目标函数", "choice:提出端侧健康信号沙盒，不上传原始通讯录和位置"],
   ["choice:先救曲线，把高刺激内容接入主推荐池", "choice:用后台画像给高刺激策略“降噪”，只隐藏最危险的用户"],
   ["choice:匿名把材料交给监管窗口", "choice:暂停 EVA 二期，把隐私链路和未成年案例一起交给复核"],
   ["choice:提出健康推荐模式，重做一个小流量目标函数", "choice:把健康推荐模式接入 EVA，让它优先帮助用户离开"],
   ["choice:用后台画像给高刺激策略“降噪”，只隐藏最危险的用户", "choice:把夏知遥加入“静默陪伴”名单，避免事件在发布会前外溢"],
-  ["choice:继续优化情感依赖模型，让 EVA 更会挽留用户", "choice:删除日志，保住项目、团队和职位"],
-  ["choice:上线防沉迷和心理提醒，让 EVA 学会告别", "choice:保留证据，等待调查组进入"],
-  ["choice:和林澈公开风险研究报告", "choice:公开全部内部资料"],
   ["choice:让乔岚拖住公关，你转移证据", "ending:idealist"],
   ["choice:把证据同步给监管联系人", "ending:idealist"],
   ["choice:公开替代方案：端侧沙盒和健康 EVA 不是口号", "ending:idealist"],
   ["choice:用 EVA 暂停记录保护夏知遥，先交出最小必要证据", "ending:idealist"],
-  ["choice:删除日志，保住项目、团队和职位", "ending:silent"],
-  ["choice:删除日志，保住项目、团队和职位", "ending:system"],
-  ["choice:保留证据，等待调查组进入", "ending:idealist"],
-  ["choice:保留证据，等待调查组进入", "ending:swallowed"],
-  ["choice:公开全部内部资料", "ending:idealist"],
-  ["choice:公开全部内部资料", "ending:witness"],
-  ["choice:公开全部内部资料", "ending:swallowed"],
 ];
 
 let state = { ...initialState };
@@ -1440,6 +1430,8 @@ let evidenceRecords = [];
 let popupCallback = null;
 let unlockedEndings = loadCollectionSet("novamindUnlockedEndings");
 let unlockedBranches = loadCollectionSet("novamindUnlockedBranches");
+let unlockedFlowEdges = loadCollectionSet("novamindUnlockedFlowEdges");
+let currentChoiceKey = "";
 
 const els = {
   stage: document.getElementById("stage"),
@@ -1760,17 +1752,13 @@ function renderCollection() {
     }
   }
 
-  for (let stageIndex = 0; stageIndex < choiceFlowStages.length - 1; stageIndex += 1) {
-    const fromItems = choiceFlowStages[stageIndex].items.filter(isUnlocked);
-    const toItems = choiceFlowStages[stageIndex + 1].items.filter(isUnlocked);
-    for (const from of fromItems) {
-      for (const to of toItems) drawPath(from.key, to.key, "branch-link unlocked");
-    }
+  for (const edgeKey of unlockedFlowEdges) {
+    const [from, to] = edgeKey.split("=>");
+    drawPath(from, to, "branch-link unlocked");
   }
 
-  for (const [from, to] of choiceFlowEdges) {
-    const unlocked = unlockedBranches.has(from) && unlockedBranches.has(to);
-    drawPath(from, to, `branch-link branch-link-special ${unlocked ? "unlocked" : ""}`);
+  for (const [from, to] of conditionalFlowEdges) {
+    if (unlockedFlowEdges.has(`${from}=>${to}`)) drawPath(from, to, "branch-link branch-link-special unlocked");
   }
 
   els.branchMap.appendChild(flow);
@@ -1863,6 +1851,14 @@ function applyChoice(choice) {
   updateStats();
 }
 
+function unlockFlowEdge(from, to) {
+  if (!from || !to) return;
+  const key = `${from}=>${to}`;
+  if (unlockedFlowEdges.has(key)) return;
+  unlockedFlowEdges.add(key);
+  saveCollectionSet("novamindUnlockedFlowEdges", unlockedFlowEdges);
+}
+
 function unlockBranch(key) {
   if (!key || unlockedBranches.has(key)) return;
   unlockedBranches.add(key);
@@ -1871,8 +1867,9 @@ function unlockBranch(key) {
 }
 
 function unlockEnding(id) {
-  if (!id || unlockedEndings.has(id)) return;
-  unlockedEndings.add(id);
+  if (!id) return;
+  const changed = !unlockedEndings.has(id);
+  if (changed) unlockedEndings.add(id);
   unlockedBranches.add(`ending:${id}`);
   saveCollectionSet("novamindUnlockedEndings", unlockedEndings);
   saveCollectionSet("novamindUnlockedBranches", unlockedBranches);
@@ -1880,6 +1877,9 @@ function unlockEnding(id) {
 }
 
 function choose(choice) {
+  const selectedChoiceKey = `choice:${choice.label}`;
+  unlockFlowEdge(currentChoiceKey, selectedChoiceKey);
+  currentChoiceKey = selectedChoiceKey;
   applyChoice(choice);
   if (choice.next === "ending") {
     goToEnding();
@@ -1923,6 +1923,7 @@ function pickEnding() {
 
 function goToEnding() {
   const endingId = pickEndingId();
+  unlockFlowEdge(currentChoiceKey, `ending:${endingId}`);
   unlockEnding(endingId);
   startNode({ ...endings[endingId], ending: true, endingId });
 }
@@ -2004,6 +2005,7 @@ function restart() {
   state = { ...initialState };
   dialogueHistory = [];
   evidenceRecords = [];
+  currentChoiceKey = "";
   updateStats();
   renderHistory();
   renderEvidence();
