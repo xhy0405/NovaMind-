@@ -1446,7 +1446,6 @@ const els = {
   collectionButton: document.getElementById("collectionButton"),
   collectionDrawer: document.getElementById("collectionDrawer"),
   collectionSummary: document.getElementById("collectionSummary"),
-  endingList: document.getElementById("endingList"),
   branchMap: document.getElementById("branchMap"),
   collectionCloseButton: document.getElementById("collectionCloseButton"),
   historyButton: document.getElementById("historyButton"),
@@ -1498,7 +1497,7 @@ function updateStats() {
 }
 
 function effectText(choice) {
-  if (choice.set || choice.flags || choice.effects) return "后续影响：会改变剧情分支、人物关系或结局收集";
+  if (choice.set || choice.flags || choice.effects) return "后续影响：会改变剧情分支、人物关系或流程图解锁";
   return "后续影响：暂无明显变化";
 }
 
@@ -1645,31 +1644,19 @@ function renderProfiles() {
 }
 
 function renderCollection() {
-  if (!els.endingList || !els.branchMap) return;
+  if (!els.branchMap) return;
   els.collectionSummary.textContent = `已解锁 ${unlockedEndings.size} / ${Object.keys(endingCatalog).length} 个结局`;
-  els.endingList.innerHTML = "";
-  for (const [id, ending] of Object.entries(endingCatalog)) {
-    const unlocked = unlockedEndings.has(id);
-    const card = document.createElement("div");
-    card.className = `ending-card ${unlocked ? "unlocked" : ""}`;
-    card.innerHTML = `
-      <strong>${unlocked ? ending.title : "未解锁结局"}</strong>
-      <span>${unlocked ? ending.route : "继续探索不同选择路线"}</span>
-      <span>${unlocked ? ending.note : "达成后会显示结局名称和触发方向。"}</span>
-    `;
-    els.endingList.appendChild(card);
-  }
 
   els.branchMap.innerHTML = "";
-  const columnGap = 250;
-  const rowGap = 94;
-  const nodeWidth = 172;
-  const nodeHeight = 58;
-  const leftPadding = 28;
-  const topPadding = 74;
+  const columnGap = 238;
+  const rowGap = 64;
+  const nodeWidth = 176;
+  const nodeHeight = 52;
+  const leftPadding = 32;
+  const topPadding = 58;
   const maxRows = Math.max(...branchCatalog.map((group) => group.items.length));
   const canvasWidth = leftPadding * 2 + (branchCatalog.length - 1) * columnGap + nodeWidth;
-  const canvasHeight = topPadding + maxRows * rowGap + 42;
+  const canvasHeight = topPadding + (maxRows - 1) * rowGap + nodeHeight + 24;
   const positions = new Map();
 
   const flow = document.createElement("div");
