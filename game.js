@@ -60,7 +60,7 @@ const nodes = {
     chapter: "开场",
     location: "location-black",
     locationName: "黑屏 / 2032",
-    time: "2032 / 08:40",
+    time: "2032年8月12日 08:40",
     cast: ["system"],
     lines: [
       { speaker: "narrator", text: "技术从来不只是代码。" },
@@ -75,7 +75,7 @@ const nodes = {
     chapter: "序章：第九十天",
     location: "location-office",
     locationName: "NovaMind 开放办公区",
-    time: "2032 / 08:47",
+    time: "2032年8月12日 08:47",
     cast: ["you", "qiao", "lin"],
     lines: [
       { speaker: "narrator", text: "入职 NovaMind 的第三个月，你学会了两件事：九点后咖啡机永远排队；写着“小实验”的需求，最后通常都会上线。" },
@@ -126,7 +126,7 @@ const nodes = {
     chapter: "序章：异常反馈",
     location: "location-office",
     locationName: "NovaMind 开放办公区",
-    time: "2032 / 09:06",
+    time: "2032年8月12日 09:06",
     cast: ["you", "lin"],
     lines: [
       { speaker: "narrator", text: "你点开详情。反馈正文很短，却不像普通投诉。" },
@@ -143,7 +143,7 @@ const nodes = {
     chapter: "序章：关掉面板",
     location: "location-office",
     locationName: "NovaMind 开放办公区",
-    time: "2032 / 09:08",
+    time: "2032年8月12日 09:08",
     cast: ["you", "lin"],
     lines: [
       { speaker: "narrator", text: "你把异常反馈折叠起来。红点还在角落里亮着，像一个没被处理的小伤口。" },
@@ -159,7 +159,7 @@ const nodes = {
     chapter: "序章：走廊",
     location: "location-office",
     locationName: "NovaMind 走廊",
-    time: "2032 / 09:18",
+    time: "2032年8月12日 09:18",
     cast: ["you", "qiao"],
     lines: [
       { speaker: "qiao", text: "早。" },
@@ -181,7 +181,7 @@ const nodes = {
     chapter: "第一章：留存曲线",
     location: "location-meeting",
     locationName: "增长会议室 A17",
-    time: "2032 / 09:30",
+    time: "2032年8月12日 09:30",
     cast: ["you", "qiao", "lin"],
     lines: [
       { speaker: "qiao", text: "人齐了。我们直接看数据。" },
@@ -208,7 +208,7 @@ const nodes = {
     chapter: "第一章：茶水间",
     location: "location-office",
     locationName: "会议室外茶水间",
-    time: "2032 / 09:58",
+    time: "2032年8月12日 09:58",
     cast: ["you", "qiao"],
     lines: [
       { speaker: "qiao", text: "休息五分钟。你喝什么？" },
@@ -233,7 +233,7 @@ const nodes = {
     chapter: "第一章：选择",
     location: "location-meeting",
     locationName: "增长会议室 A17",
-    time: "2032 / 10:12",
+    time: "2032年8月12日 10:12",
     cast: ["you", "qiao", "lin"],
     lines: [
       { speaker: "qiao", text: "我们需要一个今天能落地的方案。" },
@@ -270,7 +270,7 @@ const nodes = {
     chapter: "第一章：余波",
     location: "location-office",
     locationName: "夜晚工位",
-    time: "2032 / 23:31",
+    time: "2032年8月12日 23:31",
     cast: ["you", "qiao", "lin"],
     lines: [
       { speaker: "qiao", text: "好。今天灰度，明天看数。" },
@@ -292,7 +292,7 @@ const nodes = {
     chapter: "第一章：余波",
     location: "location-office",
     locationName: "夜晚工位",
-    time: "2032 / 23:18",
+    time: "2032年8月12日 23:18",
     cast: ["you", "qiao", "lin"],
     lines: [
       { speaker: "you", text: "我建议不要全量。负面内容降权，但保留热点池。如果只是救曲线，我们之后会解释不了。" },
@@ -313,7 +313,7 @@ const nodes = {
     chapter: "第一章：余波",
     location: "location-office",
     locationName: "夜晚工位",
-    time: "2032 / 23:44",
+    time: "2032年8月12日 23:44",
     cast: ["you", "qiao", "lin"],
     lines: [
       { speaker: "you", text: "我建议开一个健康推荐小流量桶，把长期满意度和主动退出后的状态加进目标函数。" },
@@ -335,7 +335,7 @@ const nodes = {
     chapter: "第二章：午餐",
     location: "location-office",
     locationName: "NovaMind 员工餐区",
-    time: "2032 / 两天后 12:34",
+    time: "2032年8月14日 12:34",
     cast: ["you", "qiao", "lin"],
     lines: [
       { speaker: "narrator", text: "两天后，公司的午餐高峰像一次小型发布会。每张桌子都在讨论曲线、版本、上线时间。" },
@@ -362,7 +362,7 @@ const nodes = {
     chapter: "第二章：内网消息",
     location: "location-office",
     locationName: "开放办公区 / 傍晚",
-    time: "2032 / 18:42",
+    time: "2032年8月14日 18:42",
     cast: ["you", "shen"],
     lines: [
       {
@@ -426,7 +426,7 @@ const nodes = {
     chapter: "第二章：数据流图",
     location: "location-office",
     locationName: "开放办公区 / 傍晚",
-    time: "2032 / 18:51",
+    time: "2032年8月14日 18:51",
     cast: ["you", "shen"],
     lines: [
       { speaker: "narrator", text: "你放大数据流图。每个箭头都画得规整，像只要线条足够整齐，风险就会变小。" },
@@ -442,7 +442,7 @@ const nodes = {
     chapter: "第二章：转发",
     location: "location-office",
     locationName: "开放办公区 / 傍晚",
-    time: "2032 / 18:55",
+    time: "2032年8月14日 18:55",
     cast: ["you", "lin", "shen"],
     lines: [
       { speaker: "system", text: "邮件已转发给：林澈。" },
@@ -458,7 +458,7 @@ const nodes = {
     chapter: "第二章：未读附件",
     location: "location-office",
     locationName: "开放办公区 / 傍晚",
-    time: "2032 / 18:49",
+    time: "2032年8月14日 18:49",
     cast: ["you", "shen"],
     lines: [
       { speaker: "narrator", text: "你没有点开附件。邮件标题停在收件箱里，像一扇暂时没有推开的门。" },
@@ -473,7 +473,7 @@ const nodes = {
     chapter: "第二章：合法的边界",
     location: "location-night",
     locationName: "公司地下停车场",
-    time: "2032 / 23:48",
+    time: "2032年8月14日 23:48",
     cast: ["you", "shen"],
     lines: [
       { speaker: "narrator", text: "停车场的灯隔几秒轻轻闪一下。沈舟站在一辆黑色车旁，手里拿着没有拆封的烟。" },
@@ -556,7 +556,7 @@ const nodes = {
     chapter: "第二章：余波",
     location: "location-office",
     locationName: "电梯间",
-    time: "2032 / 次日 20:10",
+    time: "2032年8月15日 20:10",
     cast: ["you", "shen", "lin"],
     lines: [
       { speaker: "system", text: "需求单已创建：推荐相关性提升。数据源：剪贴板摘要、通讯录关系、位置轨迹。" },
@@ -574,7 +574,7 @@ const nodes = {
     chapter: "第二章：余波",
     location: "location-office",
     locationName: "灰度看板 / 深夜",
-    time: "2032 / 次日 21:02",
+    time: "2032年8月15日 21:02",
     cast: ["you", "qiao", "shen"],
     lines: [
       { speaker: "system", text: "高刺激推荐风险分层已上线：高危用户内容强度轻微下调，其余用户保持原策略。" },
@@ -591,7 +591,7 @@ const nodes = {
     chapter: "第二章：余波",
     location: "location-office",
     locationName: "临时评审室",
-    time: "2032 / 次日 20:40",
+    time: "2032年8月15日 20:40",
     cast: ["you", "lin", "shen", "qiao"],
     lines: [
       { speaker: "system", text: "端侧健康信号沙盒进入小流量验证：原始通讯录、位置轨迹不上传，撤回日志默认保留。" },
@@ -608,7 +608,7 @@ const nodes = {
     chapter: "第二章：余波",
     location: "location-office",
     locationName: "楼梯间",
-    time: "2032 / 次日 20:25",
+    time: "2032年8月15日 20:25",
     cast: ["you", "lin"],
     lines: [
       { speaker: "system", text: "任务已退回：请补充数据最小化说明、本地计算可行性、用户撤回机制。" },
@@ -628,7 +628,7 @@ const nodes = {
     chapter: "第二章：余波",
     location: "location-night",
     locationName: "公司地下停车场",
-    time: "2032 / 次日 00:36",
+    time: "2032年8月15日 00:36",
     cast: ["you", "shen"],
     lines: [
       { speaker: "system", text: "外部监管咨询窗口：材料已接收。" },
@@ -645,8 +645,8 @@ const nodes = {
   privacyMorningAfter: {
     chapter: "第二章：普通早晨",
     location: "location-office",
-    locationName: "开放办公区 / 次日",
-    time: "2032 / 09:16",
+    locationName: "开放办公区 / 8月16日",
+    time: "2032年8月16日 09:16",
     cast: ["you", "qiao", "lin"],
     lines: [
       { speaker: "narrator", text: "第二天早晨，咖啡机照常排队。没有警报，没有全员邮件，甚至没有人提起昨晚。" },
@@ -672,7 +672,7 @@ const nodes = {
     chapter: "第三章：演示",
     location: "location-lab",
     locationName: "数字人情感实验室",
-    time: "2032 / 14:05",
+    time: "2032年8月16日 14:05",
     cast: ["you", "qiao", "lin"],
     lines: [
       { speaker: "narrator", text: "数字人实验室比你想象中明亮。动作捕捉设备挂在墙边，屏幕里的 EVA 正在练习一个恰到好处的微笑。" },
@@ -733,7 +733,7 @@ const nodes = {
     chapter: "第三章：触发条件",
     location: "location-lab",
     locationName: "数字人情感实验室",
-    time: "2032 / 14:18",
+    time: "2032年8月16日 14:18",
     cast: ["you", "qiao", "lin"],
     lines: [
       { speaker: "you", text: "我想看触发条件。不是文案，是它什么时候出现。" },
@@ -750,7 +750,7 @@ const nodes = {
     chapter: "第三章：继续演示",
     location: "location-lab",
     locationName: "数字人情感实验室",
-    time: "2032 / 14:18",
+    time: "2032年8月16日 14:18",
     cast: ["you", "qiao", "lin"],
     lines: [
       { speaker: "you", text: "效果确实自然。先继续看完整链路吧。" },
@@ -766,7 +766,7 @@ const nodes = {
     chapter: "第三章：沉默",
     location: "location-lab",
     locationName: "数字人情感实验室",
-    time: "2032 / 14:18",
+    time: "2032年8月16日 14:18",
     cast: ["you", "qiao", "lin"],
     lines: [
       { speaker: "narrator", text: "你没有说话。沉默让会议室空了两秒。" },
@@ -782,7 +782,7 @@ const nodes = {
     chapter: "第三章：用户编号",
     location: "location-office",
     locationName: "实验室外走廊",
-    time: "2032 / 15:12",
+    time: "2032年8月16日 15:12",
     cast: ["you", "lin"],
     lines: [
       { speaker: "lin", text: "你还记得 A-2179 吗？" },
@@ -812,7 +812,7 @@ const nodes = {
     chapter: "第三章：夏知遥",
     location: "location-lab",
     locationName: "数字人情感实验室",
-    time: "2032 / 16:20",
+    time: "2032年8月16日 16:20",
     cast: ["you", "lin", "xia"],
     lines: [
       { speaker: "narrator", text: "夏知遥坐在实验室角落，校服外套拉链拉到最上面。她的手指一直在揉手机壳边缘。" },
@@ -898,7 +898,7 @@ const nodes = {
     chapter: "第三章：余波",
     location: "location-lab",
     locationName: "数字人实验室 / 夜",
-    time: "2032 / 22:12",
+    time: "2032年8月16日 22:12",
     cast: ["you", "xia", "lin"],
     lines: [
       { speaker: "system", text: "EVA 召回策略已更新：高孤独倾向用户，主动陪伴触发概率上调。" },
@@ -918,7 +918,7 @@ const nodes = {
     chapter: "第三章：余波",
     location: "location-lab",
     locationName: "数字人实验室 / 夜",
-    time: "2032 / 22:18",
+    time: "2032年8月16日 22:18",
     cast: ["you", "xia", "lin", "qiao"],
     lines: [
       { speaker: "system", text: "静默陪伴名单已更新：目标用户公开触达频率下调，私域安抚频率上调。" },
@@ -936,7 +936,7 @@ const nodes = {
     chapter: "第三章：余波",
     location: "location-lab",
     locationName: "数字人实验室 / 夜",
-    time: "2032 / 22:09",
+    time: "2032年8月16日 22:09",
     cast: ["you", "xia", "lin", "qiao"],
     lines: [
       { speaker: "system", text: "EVA 二期已进入临时复核：未成年用户、隐私画像链路、高依赖召回策略暂停上线。" },
@@ -955,7 +955,7 @@ const nodes = {
     chapter: "第三章：余波",
     location: "location-lab",
     locationName: "数字人实验室 / 夜",
-    time: "2032 / 22:02",
+    time: "2032年8月16日 22:02",
     cast: ["you", "xia", "lin", "qiao"],
     lines: [
       { speaker: "system", text: "健康推荐模式已接入 EVA：连续对话后，系统将优先触发休息、现实联系人和求助资源。" },
@@ -971,7 +971,7 @@ const nodes = {
     chapter: "第三章：余波",
     location: "location-lab",
     locationName: "数字人实验室 / 夜",
-    time: "2032 / 22:05",
+    time: "2032年8月16日 22:05",
     cast: ["you", "xia", "lin"],
     lines: [
       { speaker: "system", text: "防沉迷机制已上线：连续对话超过 90 分钟后，EVA 将触发休息建议。" },
@@ -989,7 +989,7 @@ const nodes = {
     chapter: "第三章：余波",
     location: "location-office",
     locationName: "楼下便利店",
-    time: "2032 / 23:27",
+    time: "2032年8月16日 23:27",
     cast: ["you", "lin"],
     lines: [
       { speaker: "system", text: "内部风险研究报告已发布。十七分钟后，报告被管理员删除。" },
@@ -1008,7 +1008,7 @@ const nodes = {
     chapter: "第三章：夜间消息",
     location: "location-office",
     locationName: "空荡的办公区",
-    time: "2032 / 01:14",
+    time: "2032年8月17日 01:14",
     cast: ["you", "system"],
     lines: [
       { speaker: "narrator", text: "凌晨一点十四分，办公区的灯自动熄了一半。你准备关电脑时，内网消息跳了出来。" },
@@ -1030,8 +1030,8 @@ const nodes = {
   crisisWarmup: {
     chapter: "第四章：前兆",
     location: "location-office",
-    locationName: "开放办公区 / 次日清晨",
-    time: "2032 / 08:22",
+    locationName: "开放办公区 / 8月17日清晨",
+    time: "2032年8月17日 08:22",
     cast: ["you", "qiao", "lin"],
     lines: [
       { speaker: "narrator", text: "第二天早上，咖啡机前没有人开玩笑。每个人都低头看手机，又假装自己不是在看同一条消息。" },
@@ -1063,7 +1063,7 @@ const nodes = {
     chapter: "第四章：失控",
     location: "location-crisis",
     locationName: "NovaMind 开放办公区",
-    time: "2032 / 17:40",
+    time: "2032年8月17日 17:40",
     news: "NovaMind 操控用户情绪",
     cast: ["you", "media", "qiao"],
     lines: [
@@ -1094,7 +1094,7 @@ const nodes = {
     chapter: "第四章：战情室",
     location: "location-crisis",
     locationName: "CEO 战情室",
-    time: "2032 / 21:05",
+    time: "2032年8月17日 21:05",
     news: "NovaMind 操控用户情绪",
     cast: ["you", "ceo", "qiao", "shen", "lin"],
     lines: [
@@ -1198,7 +1198,7 @@ const endings = {
     chapter: "结局：沉默的工程师",
     location: "location-black",
     locationName: "数年后 / 新闻回放",
-    time: "2037 / 20:00",
+    time: "2037年5月21日 20:00",
     cast: ["you", "media"],
     lines: [
       { speaker: "narrator", text: "你选择了妥协。几年后，NovaMind 成为全球最大的情绪内容平台。" },
@@ -1210,7 +1210,7 @@ const endings = {
     chapter: "结局：理想主义者",
     location: "location-court",
     locationName: "公开听证会",
-    time: "2033 / 10:30",
+    time: "2033年3月18日 10:30",
     cast: ["you", "lin", "media"],
     lines: [
       { speaker: "media", text: "NovaMind 被正式调查。内部证据推动《人工智能伦理监管法》进入审议。" },
@@ -1223,7 +1223,7 @@ const endings = {
     chapter: "隐藏结局：系统的一部分",
     location: "location-boardroom",
     locationName: "NovaMind 董事会议室",
-    time: "2040 / 09:00",
+    time: "2040年9月01日 09:00",
     cast: ["you", "ceo"],
     lines: [
       { speaker: "narrator", text: "你长期只追求利润。危机被压下，指标继续向上。" },
@@ -1237,7 +1237,7 @@ const endings = {
     chapter: "结局：代价高昂的证人",
     location: "location-court",
     locationName: "公开听证会",
-    time: "2033 / 10:30",
+    time: "2033年3月18日 10:30",
     cast: ["you", "lin", "media"],
     lines: [
       { speaker: "media", text: "NovaMind 听证会进入第三日。你提交的证据让调查继续推进，也让你的名字出现在质询名单上。" },
@@ -1251,7 +1251,7 @@ const endings = {
     chapter: "结局：被系统吞没",
     location: "location-black",
     locationName: "数周后 / 信息流",
-    time: "2033 / 22:00",
+    time: "2033年1月09日 22:00",
     cast: ["you", "media", "system"],
     lines: [
       { speaker: "media", text: "NovaMind 回应称，网传材料存在大量断章取义，并将配合内部复核。" },
@@ -1262,14 +1262,87 @@ const endings = {
   },
 };
 
+const endingCatalog = {
+  silent: {
+    title: "沉默的工程师",
+    route: "删除日志或证据不足时保持沉默",
+    note: "公司继续扩张，工程师知道真相却没有再说。",
+  },
+  idealist: {
+    title: "理想主义者",
+    route: "保留证据、监管介入，或公开完整替代方案",
+    note: "失去工作，但推动 AI 伦理监管进入公共议程。",
+  },
+  system: {
+    title: "系统的一部分",
+    route: "长期追逐利润，并在危机中删除日志",
+    note: "你升任 CTO，也成为当年自己最警惕的人。",
+  },
+  witness: {
+    title: "代价高昂的证人",
+    route: "曾参与伤害，又选择公开资料",
+    note: "真相被看见，你也必须回答自己曾经做过什么。",
+  },
+  swallowed: {
+    title: "被系统吞没",
+    route: "证据链不足或公司警惕过高时公开失败",
+    note: "勇气被公关与流程消化成一次误解。",
+  },
+};
+
+const branchCatalog = [
+  {
+    title: "第一章",
+    items: [
+      { key: "viewedA2179", title: "查看 #A-2179", note: "提前记录异常反馈" },
+      { key: "highStimulus", title: "高刺激推荐", note: "利润路线开启" },
+      { key: "healthyMode", title: "健康推荐模式", note: "健康 EVA 路线开启" },
+    ],
+  },
+  {
+    title: "第二章",
+    items: [
+      { key: "sawPrivacyFlow", title: "查看数据流图", note: "发现后台隐私链路" },
+      { key: "privacyJoined", title: "参与隐私画像", note: "卷入数据证据链" },
+      { key: "highStimulusProfiled", title: "画像降噪", note: "高刺激与隐私合流" },
+      { key: "localPrivacySandbox", title: "端侧沙盒", note: "替代方案证据" },
+      { key: "privacyReported", title: "匿名监管", note: "调查线开启" },
+    ],
+  },
+  {
+    title: "第三章",
+    items: [
+      { key: "questionedEvaTrigger", title: "追问触发条件", note: "看见高孤独召回" },
+      { key: "dependenceOptimized", title: "情感依赖", note: "EVA 更会挽留用户" },
+      { key: "antiAddiction", title: "防沉迷机制", note: "让 EVA 学会告别" },
+      { key: "usedHealthyForEva", title: "健康 EVA", note: "替代方案落地" },
+      { key: "evaSuspended", title: "暂停二期", note: "保护未成年案例" },
+      { key: "reportPublished", title: "公开风险报告", note: "危机提前爆发" },
+    ],
+  },
+  {
+    title: "第四章",
+    items: [
+      { key: "finalAction:delete", title: "删除日志", note: "沉默或系统路线" },
+      { key: "finalAction:preserve", title: "保留证据", note: "等待调查进入" },
+      { key: "finalAction:publish", title: "公开资料", note: "揭露或被吞没" },
+      { key: "ending:idealist", title: "理想主义者", note: "已解锁结局" },
+      { key: "ending:system", title: "系统的一部分", note: "已解锁结局" },
+    ],
+  },
+];
+
 let state = { ...initialState };
 let current = nodes.intro;
 let lineIndex = 0;
 let typingTimer = null;
 let isTyping = false;
+let isTransitioning = false;
 let dialogueHistory = [];
 let evidenceRecords = [];
 let popupCallback = null;
+let unlockedEndings = loadCollectionSet("novamindUnlockedEndings");
+let unlockedBranches = loadCollectionSet("novamindUnlockedBranches");
 
 const els = {
   stage: document.getElementById("stage"),
@@ -1282,44 +1355,67 @@ const els = {
   speaker: document.getElementById("speaker"),
   speakerRole: document.getElementById("speakerRole"),
   dialogueText: document.getElementById("dialogueText"),
+  dialoguePanel: document.getElementById("dialoguePanel"),
   choices: document.getElementById("choices"),
   nextButton: document.getElementById("nextButton"),
   restartButton: document.getElementById("restartButton"),
-  statsButton: document.getElementById("statsButton"),
-  statsDrawer: document.getElementById("statsDrawer"),
+  collectionButton: document.getElementById("collectionButton"),
+  collectionDrawer: document.getElementById("collectionDrawer"),
+  collectionSummary: document.getElementById("collectionSummary"),
+  endingList: document.getElementById("endingList"),
+  branchMap: document.getElementById("branchMap"),
+  collectionCloseButton: document.getElementById("collectionCloseButton"),
   historyButton: document.getElementById("historyButton"),
   historyDrawer: document.getElementById("historyDrawer"),
   historyList: document.getElementById("historyList"),
+  historyCloseButton: document.getElementById("historyCloseButton"),
   evidenceButton: document.getElementById("evidenceButton"),
   evidenceDrawer: document.getElementById("evidenceDrawer"),
   evidenceList: document.getElementById("evidenceList"),
   profileButton: document.getElementById("profileButton"),
   profileDrawer: document.getElementById("profileDrawer"),
   profileList: document.getElementById("profileList"),
+  profileCloseButton: document.getElementById("profileCloseButton"),
   eventPopup: document.getElementById("eventPopup"),
   eventLabel: document.getElementById("eventLabel"),
   eventTitle: document.getElementById("eventTitle"),
   eventBody: document.getElementById("eventBody"),
   eventCloseButton: document.getElementById("eventCloseButton"),
+  sceneTransition: document.getElementById("sceneTransition"),
+  transitionChapter: document.getElementById("transitionChapter"),
+  transitionLocation: document.getElementById("transitionLocation"),
+  transitionTime: document.getElementById("transitionTime"),
 };
 
 function clamp(value) {
   return Math.max(0, Math.min(100, value));
 }
 
+function loadCollectionSet(key) {
+  try {
+    return new Set(JSON.parse(localStorage.getItem(key) || "[]"));
+  } catch {
+    return new Set();
+  }
+}
+
+function saveCollectionSet(key, set) {
+  localStorage.setItem(key, JSON.stringify([...set]));
+}
+
 function updateStats() {
   for (const key of ["profit", "happiness", "ethics", "privacy"]) {
     const value = clamp(state[key]);
-    document.getElementById(`${key}Value`).textContent = value;
-    document.getElementById(`${key}Bar`).style.width = `${value}%`;
+    const valueEl = document.getElementById(`${key}Value`);
+    const barEl = document.getElementById(`${key}Bar`);
+    if (valueEl) valueEl.textContent = value;
+    if (barEl) barEl.style.width = `${value}%`;
   }
 }
 
 function effectText(choice) {
-  if (!choice.effects) return "属性影响：无";
-  return Object.entries(choice.effects)
-    .map(([key, delta]) => `${statLabels[key] || key} ${delta > 0 ? "+" : ""}${delta}`)
-    .join("\n");
+  if (choice.set || choice.flags || choice.effects) return "后续影响：会改变剧情分支、人物关系或结局收集";
+  return "后续影响：暂无明显变化";
 }
 
 function conditionMet(item) {
@@ -1387,9 +1483,13 @@ function renderHistory() {
     return;
   }
   for (const item of items) {
+    const character = characters[item.speakerId] || characters.narrator;
     const row = document.createElement("div");
-    row.className = "drawer-item";
-    row.innerHTML = `<strong>${item.speaker}</strong><p>${item.text}</p>`;
+    row.className = "drawer-item history-item";
+    row.innerHTML = `
+      <img class="history-avatar" src="assets/characters/${character.asset}" alt="${character.name}">
+      <div><strong>${item.speaker}</strong><p>${item.text}</p></div>
+    `;
     els.historyList.appendChild(row);
   }
 }
@@ -1445,9 +1545,44 @@ function renderProfiles() {
   for (const id of ["you", "qiao", "shen", "lin", "xia", "ceo", "media", "system"]) {
     const character = characters[id];
     const row = document.createElement("div");
-    row.className = "drawer-item";
-    row.innerHTML = `<strong>${character.name} / ${character.role}</strong><p>${character.bio}</p>`;
+    row.className = "drawer-item profile-card";
+    row.innerHTML = `
+      <img class="profile-avatar" src="assets/characters/${character.asset}" alt="${character.name}">
+      <div><strong>${character.name} / ${character.role}</strong><p>${character.bio}</p></div>
+    `;
     els.profileList.appendChild(row);
+  }
+}
+
+function renderCollection() {
+  if (!els.endingList || !els.branchMap) return;
+  els.collectionSummary.textContent = `已解锁 ${unlockedEndings.size} / ${Object.keys(endingCatalog).length} 个结局`;
+  els.endingList.innerHTML = "";
+  for (const [id, ending] of Object.entries(endingCatalog)) {
+    const unlocked = unlockedEndings.has(id);
+    const card = document.createElement("div");
+    card.className = `ending-card ${unlocked ? "unlocked" : ""}`;
+    card.innerHTML = `
+      <strong>${unlocked ? ending.title : "未解锁结局"}</strong>
+      <span>${unlocked ? ending.route : "继续探索不同选择路线"}</span>
+      <span>${unlocked ? ending.note : "达成后会显示结局名称和触发方向。"}</span>
+    `;
+    els.endingList.appendChild(card);
+  }
+
+  els.branchMap.innerHTML = "";
+  for (const group of branchCatalog) {
+    const column = document.createElement("div");
+    column.className = "branch-column";
+    column.innerHTML = `<h3>${group.title}</h3>`;
+    for (const item of group.items) {
+      const unlocked = unlockedBranches.has(item.key);
+      const node = document.createElement("div");
+      node.className = `branch-node ${unlocked ? "unlocked" : ""}`;
+      node.innerHTML = `<strong>${unlocked ? item.title : "未发现"}</strong><span>${unlocked ? item.note : "分支尚未解锁"}</span>`;
+      column.appendChild(node);
+    }
+    els.branchMap.appendChild(column);
   }
 }
 
@@ -1455,7 +1590,7 @@ function addHistory(line) {
   const speaker = characters[line.speaker] || characters.narrator;
   const last = dialogueHistory[dialogueHistory.length - 1];
   if (last && last.speaker === speaker.name && last.text === line.text) return;
-  dialogueHistory.push({ speaker: speaker.name, text: line.text });
+  dialogueHistory.push({ speaker: speaker.name, speakerId: line.speaker, text: line.text });
   renderHistory();
 }
 
@@ -1465,6 +1600,7 @@ function typeLine(line) {
   els.dialogueText.textContent = "";
   els.nextButton.classList.add("hidden");
   els.choices.innerHTML = "";
+  els.dialoguePanel.classList.remove("has-choices");
 
   const speaker = characters[line.speaker] || characters.narrator;
   els.speaker.textContent = speaker.name;
@@ -1495,8 +1631,10 @@ function showCurrentLine() {
 function renderChoices() {
   els.nextButton.classList.add("hidden");
   els.choices.innerHTML = "";
+  els.dialoguePanel.classList.remove("has-choices");
 
   if (current.choices && current.choices.length > 0) {
+    els.dialoguePanel.classList.add("has-choices");
     for (const choice of current.choices) {
       if (choice.condition && !choice.condition(state)) continue;
       const locked = choice.require && !choice.require(state);
@@ -1526,6 +1664,10 @@ function applyChoice(choice) {
   }
   if (choice.set) {
     Object.assign(state, choice.set);
+    for (const [key, value] of Object.entries(choice.set)) {
+      if (value === true) unlockBranch(key);
+      if (key === "finalAction") unlockBranch(`finalAction:${value}`);
+    }
   }
   if (choice.flags) {
     for (const [key, delta] of Object.entries(choice.flags)) {
@@ -1533,7 +1675,24 @@ function applyChoice(choice) {
     }
   }
   addEvidence(choice.evidenceItem);
+  unlockBranch(`choice:${choice.label}`);
   updateStats();
+}
+
+function unlockBranch(key) {
+  if (!key || unlockedBranches.has(key)) return;
+  unlockedBranches.add(key);
+  saveCollectionSet("novamindUnlockedBranches", unlockedBranches);
+  renderCollection();
+}
+
+function unlockEnding(id) {
+  if (!id || unlockedEndings.has(id)) return;
+  unlockedEndings.add(id);
+  unlockedBranches.add(`ending:${id}`);
+  saveCollectionSet("novamindUnlockedEndings", unlockedEndings);
+  saveCollectionSet("novamindUnlockedBranches", unlockedBranches);
+  renderCollection();
 }
 
 function choose(choice) {
@@ -1545,10 +1704,10 @@ function choose(choice) {
   startNode(nodes[choice.next]);
 }
 
-function pickEnding() {
+function pickEndingId() {
   if (state.finalAction === "delete") {
-    if (state.profitChoices >= 3 && state.profit >= 80 && state.ethics >= 50) return endings.system;
-    return endings.silent;
+    if (state.profitChoices >= 3 && state.profit >= 80 && state.ethics >= 50) return "system";
+    return "silent";
   }
 
   if (state.finalAction === "preserve") {
@@ -1558,37 +1717,79 @@ function pickEnding() {
       state.linTrust >= 65 ||
       state.evaSuspended ||
       (state.localPrivacySandbox && state.usedHealthyForEva && state.evidence >= 35)
-    ) return endings.idealist;
-    return endings.swallowed;
+    ) return "idealist";
+    return "swallowed";
   }
 
   if (state.finalAction === "publish") {
-    if (state.localPrivacySandbox && state.usedHealthyForEva && state.evidence >= 50) return endings.idealist;
-    if (state.evidence < 35 || (state.shenSuspicion >= 70 && !state.investigation)) return endings.swallowed;
-    if (state.profitChoices >= 2 || state.compromiseChoices >= 2 || state.ethics >= 45) return endings.witness;
-    return endings.idealist;
+    if (state.localPrivacySandbox && state.usedHealthyForEva && state.evidence >= 50) return "idealist";
+    if (state.evidence < 35 || (state.shenSuspicion >= 70 && !state.investigation)) return "swallowed";
+    if (state.profitChoices >= 2 || state.compromiseChoices >= 2 || state.ethics >= 45) return "witness";
+    return "idealist";
   }
 
-  if (state.profitChoices >= 3 && state.profit >= 85) return endings.system;
-  if (state.evidence >= 45 || state.ethics <= 15) return endings.idealist;
-  return endings.silent;
+  if (state.profitChoices >= 3 && state.profit >= 85) return "system";
+  if (state.evidence >= 45 || state.ethics <= 15) return "idealist";
+  return "silent";
+}
+
+function pickEnding() {
+  return endings[pickEndingId()];
 }
 
 function goToEnding() {
-  current = prepareNode({ ...pickEnding(), ending: true });
-  lineIndex = 0;
-  renderScreen(current);
-  showCurrentLine();
+  const endingId = pickEndingId();
+  unlockEnding(endingId);
+  startNode({ ...endings[endingId], ending: true, endingId });
 }
 
-function startNode(rawNode) {
-  current = prepareNode(rawNode);
-  lineIndex = 0;
-  renderScreen(current);
-  showCurrentLine();
+function shouldShowTransition(nextNode) {
+  if (!current || current === nodes.intro) return false;
+  if (nextNode.ending) return true;
+  return current.location !== nextNode.location || current.locationName !== nextNode.locationName;
+}
+
+function showSceneTransition(node, onMidpoint) {
+  isTransitioning = true;
+  els.transitionChapter.textContent = node.chapter || "下一幕";
+  els.transitionLocation.textContent = node.locationName || "NovaMind";
+  els.transitionTime.textContent = node.time || "2032";
+  els.sceneTransition.classList.remove("hidden");
+  requestAnimationFrame(() => els.sceneTransition.classList.add("active"));
+
+  window.setTimeout(() => {
+    onMidpoint();
+  }, 1050);
+
+  window.setTimeout(() => {
+    els.sceneTransition.classList.remove("active");
+  }, 1350);
+
+  window.setTimeout(() => {
+    els.sceneTransition.classList.add("hidden");
+    isTransitioning = false;
+  }, 1650);
+}
+
+function startNode(rawNode, options = {}) {
+  const nextNode = prepareNode(rawNode);
+  const enterNode = () => {
+    current = nextNode;
+    lineIndex = 0;
+    renderScreen(current);
+    showCurrentLine();
+  };
+
+  if (!options.skipTransition && shouldShowTransition(nextNode)) {
+    showSceneTransition(nextNode, enterNode);
+    return;
+  }
+
+  enterNode();
 }
 
 function advance() {
+  if (isTransitioning) return;
   if (!els.eventPopup.classList.contains("hidden")) return;
   if (isTyping) {
     clearInterval(typingTimer);
@@ -1623,13 +1824,14 @@ function restart() {
   renderHistory();
   renderEvidence();
   renderProfiles();
+  renderCollection();
   els.nextButton.textContent = "继续";
-  startNode(nodes.intro);
+  startNode(nodes.intro, { skipTransition: true });
 }
 
 function toggleDrawer(drawer, button) {
   for (const item of [
-    [els.statsDrawer, els.statsButton],
+    [els.collectionDrawer, els.collectionButton],
     [els.evidenceDrawer, els.evidenceButton],
     [els.historyDrawer, els.historyButton],
     [els.profileDrawer, els.profileButton],
@@ -1644,11 +1846,18 @@ function toggleDrawer(drawer, button) {
 }
 
 els.nextButton.addEventListener("click", advance);
+els.dialoguePanel.addEventListener("click", (event) => {
+  if (event.target.closest("button") || els.dialoguePanel.classList.contains("has-choices")) return;
+  advance();
+});
 els.restartButton.addEventListener("click", restart);
-els.statsButton.addEventListener("click", () => toggleDrawer(els.statsDrawer, els.statsButton));
+els.collectionButton.addEventListener("click", () => toggleDrawer(els.collectionDrawer, els.collectionButton));
+els.collectionCloseButton.addEventListener("click", () => toggleDrawer(els.collectionDrawer, els.collectionButton));
 els.evidenceButton.addEventListener("click", () => toggleDrawer(els.evidenceDrawer, els.evidenceButton));
 els.historyButton.addEventListener("click", () => toggleDrawer(els.historyDrawer, els.historyButton));
+els.historyCloseButton.addEventListener("click", () => toggleDrawer(els.historyDrawer, els.historyButton));
 els.profileButton.addEventListener("click", () => toggleDrawer(els.profileDrawer, els.profileButton));
+els.profileCloseButton.addEventListener("click", () => toggleDrawer(els.profileDrawer, els.profileButton));
 els.eventCloseButton.addEventListener("click", closeEventPopup);
 
 document.addEventListener("keydown", (event) => {
@@ -1656,8 +1865,8 @@ document.addEventListener("keydown", (event) => {
   if (event.key === " " || event.key === "Enter") {
     if (!els.nextButton.classList.contains("hidden")) advance();
   }
-  if (event.key.toLowerCase() === "s") {
-    els.statsButton.click();
+  if (event.key.toLowerCase() === "c") {
+    els.collectionButton.click();
   }
 });
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NovaMind：算法边界</title>
-  <link rel="stylesheet" href="style.css?v=20260514-interactive" />
+  <link rel="stylesheet" href="style.css?v=20260517-collection" />
 </head>
 <body>
   <main class="game-shell">
@@ -19,7 +19,7 @@
           </div>
         </div>
         <div class="top-actions">
-          <button class="icon-button" id="statsButton" type="button" aria-expanded="false">属性</button>
+          <button class="icon-button" id="collectionButton" type="button" aria-expanded="false">结局</button>
           <button class="icon-button" id="evidenceButton" type="button" aria-expanded="false">证据</button>
           <button class="icon-button" id="historyButton" type="button" aria-expanded="false">历史</button>
           <button class="icon-button" id="profileButton" type="button" aria-expanded="false">人物</button>
@@ -27,33 +27,33 @@
         </div>
       </header>
 
-      <aside class="side-drawer stats-drawer" id="statsDrawer" aria-label="玩家属性">
+      <aside class="side-drawer text-drawer fullscreen-drawer collection-drawer" id="collectionDrawer" aria-label="结局与分支收集">
         <div class="drawer-head">
-          <strong>工程师状态</strong>
-          <span>数值会影响最终结局</span>
+          <div>
+            <strong>结局与分支</strong>
+            <span id="collectionSummary">已解锁 0 / 5 个结局</span>
+          </div>
+          <button class="drawer-close" id="collectionCloseButton" type="button">关闭</button>
         </div>
-        <div class="stat" data-stat="profit">
-          <div class="stat-head"><span>公司利润</span><b id="profitValue">50</b></div>
-          <div class="meter"><i id="profitBar"></i></div>
-        </div>
-        <div class="stat" data-stat="happiness">
-          <div class="stat-head"><span>用户幸福度</span><b id="happinessValue">50</b></div>
-          <div class="meter"><i id="happinessBar"></i></div>
-        </div>
-        <div class="stat" data-stat="ethics">
-          <div class="stat-head"><span>伦理风险</span><b id="ethicsValue">20</b></div>
-          <div class="meter"><i id="ethicsBar"></i></div>
-        </div>
-        <div class="stat" data-stat="privacy">
-          <div class="stat-head"><span>隐私安全</span><b id="privacyValue">70</b></div>
-          <div class="meter"><i id="privacyBar"></i></div>
+        <div class="collection-layout">
+          <section>
+            <h2>结局收集</h2>
+            <div class="ending-grid" id="endingList"></div>
+          </section>
+          <section>
+            <h2>分支图</h2>
+            <div class="branch-map" id="branchMap"></div>
+          </section>
         </div>
       </aside>
 
-      <aside class="side-drawer text-drawer" id="historyDrawer" aria-label="历史对话">
+      <aside class="side-drawer text-drawer fullscreen-drawer" id="historyDrawer" aria-label="历史对话">
         <div class="drawer-head">
-          <strong>历史对话</strong>
-          <span>最近的剧情文本会记录在这里</span>
+          <div>
+            <strong>历史对话</strong>
+            <span>最近的剧情文本会记录在这里</span>
+          </div>
+          <button class="drawer-close" id="historyCloseButton" type="button">关闭</button>
         </div>
         <div class="drawer-list" id="historyList"></div>
       </aside>
@@ -66,18 +66,29 @@
         <div class="drawer-list" id="evidenceList"></div>
       </aside>
 
-      <aside class="side-drawer text-drawer" id="profileDrawer" aria-label="人物信息">
+      <aside class="side-drawer text-drawer fullscreen-drawer" id="profileDrawer" aria-label="人物信息">
         <div class="drawer-head">
-          <strong>人物信息</strong>
-          <span>主要角色和他们的立场</span>
+          <div>
+            <strong>人物信息</strong>
+            <span>主要角色和他们的立场</span>
+          </div>
+          <button class="drawer-close" id="profileCloseButton" type="button">关闭</button>
         </div>
         <div class="drawer-list" id="profileList"></div>
       </aside>
 
+      <div class="scene-transition hidden" id="sceneTransition" aria-hidden="true">
+        <div class="transition-card">
+          <span id="transitionChapter">下一幕</span>
+          <strong id="transitionLocation">NovaMind</strong>
+          <em id="transitionTime">2032</em>
+        </div>
+      </div>
+
       <section class="visual-area">
         <div class="scene-meta">
           <span id="chapterChip">开场</span>
-          <span id="sceneClock">2032 / 08:40</span>
+          <span id="sceneClock">2032年8月12日 08:40</span>
         </div>
 
         <div class="news-banner hidden" id="newsBanner">
@@ -97,7 +108,7 @@
         </div>
       </div>
 
-      <section class="dialogue-panel">
+      <section class="dialogue-panel" id="dialoguePanel">
         <div class="speaker-row">
           <div>
             <div class="speaker" id="speaker">旁白</div>
@@ -111,6 +122,6 @@
     </section>
   </main>
 
-  <script src="game.js?v=20260515-branches"></script>
+  <script src="game.js?v=20260517-collection"></script>
 </body>
 </html>
