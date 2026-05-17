@@ -430,25 +430,25 @@ button {
 
 .branch-link {
   fill: none;
-  stroke: rgba(204, 214, 228, 0.18);
+  stroke: rgba(204, 214, 228, 0.24);
   stroke-width: 2;
 }
 
 .branch-link-rail {
-  stroke: rgba(204, 214, 228, 0.08);
-  stroke-width: 1;
+  stroke: rgba(106, 216, 255, 0.34);
+  stroke-width: 2;
   shape-rendering: geometricPrecision;
 }
 
 .branch-link-special {
-  stroke: rgba(204, 214, 228, 0.11);
+  stroke: rgba(106, 216, 255, 0.36);
   stroke-dasharray: 5 7;
 }
 
 .branch-link.unlocked {
-  stroke: rgba(106, 216, 255, 0.78);
-  stroke-width: 3;
-  filter: drop-shadow(0 0 5px rgba(106, 216, 255, 0.4));
+  stroke: rgba(114, 239, 179, 0.92);
+  stroke-width: 3.4;
+  filter: drop-shadow(0 0 7px rgba(114, 239, 179, 0.48));
 }
 
 .branch-stage-label {
