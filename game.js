@@ -1357,7 +1357,6 @@ const els = {
   dialogueText: document.getElementById("dialogueText"),
   dialoguePanel: document.getElementById("dialoguePanel"),
   choices: document.getElementById("choices"),
-  nextButton: document.getElementById("nextButton"),
   restartButton: document.getElementById("restartButton"),
   collectionButton: document.getElementById("collectionButton"),
   collectionDrawer: document.getElementById("collectionDrawer"),
@@ -1519,9 +1518,7 @@ function closeEventPopup() {
 }
 
 function revealAfterLine() {
-  if (lineIndex < current.lines.length - 1) {
-    els.nextButton.classList.remove("hidden");
-  } else {
+  if (lineIndex >= current.lines.length - 1) {
     renderChoices();
   }
 }
@@ -1598,7 +1595,6 @@ function typeLine(line) {
   clearInterval(typingTimer);
   isTyping = true;
   els.dialogueText.textContent = "";
-  els.nextButton.classList.add("hidden");
   els.choices.innerHTML = "";
   els.dialoguePanel.classList.remove("has-choices");
 
@@ -1629,7 +1625,6 @@ function showCurrentLine() {
 }
 
 function renderChoices() {
-  els.nextButton.classList.add("hidden");
   els.choices.innerHTML = "";
   els.dialoguePanel.classList.remove("has-choices");
 
@@ -1650,10 +1645,6 @@ function renderChoices() {
     return;
   }
 
-  if (current.next) {
-    els.nextButton.textContent = "继续";
-    els.nextButton.classList.remove("hidden");
-  }
 }
 
 function applyChoice(choice) {
@@ -1825,7 +1816,6 @@ function restart() {
   renderEvidence();
   renderProfiles();
   renderCollection();
-  els.nextButton.textContent = "继续";
   startNode(nodes.intro, { skipTransition: true });
 }
 
@@ -1845,7 +1835,6 @@ function toggleDrawer(drawer, button) {
   button.setAttribute("aria-expanded", String(open));
 }
 
-els.nextButton.addEventListener("click", advance);
 els.dialoguePanel.addEventListener("click", (event) => {
   if (event.target.closest("button") || els.dialoguePanel.classList.contains("has-choices")) return;
   advance();
@@ -1863,7 +1852,7 @@ els.eventCloseButton.addEventListener("click", closeEventPopup);
 document.addEventListener("keydown", (event) => {
   if (!els.eventPopup.classList.contains("hidden")) return;
   if (event.key === " " || event.key === "Enter") {
-    if (!els.nextButton.classList.contains("hidden")) advance();
+    advance();
   }
   if (event.key.toLowerCase() === "c") {
     els.collectionButton.click();
