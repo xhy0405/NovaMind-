@@ -1330,42 +1330,65 @@ const endingCatalog = {
   },
 };
 
-const branchCatalog = [
+const choiceFlowStages = [
   {
-    title: "第一章",
+    title: "序章",
     items: [
-      { key: "viewedA2179", title: "查看 #A-2179", note: "提前记录异常反馈" },
-      { key: "highStimulus", title: "高刺激推荐", note: "利润路线开启" },
-      { key: "healthyMode", title: "健康推荐模式", note: "健康 EVA 路线开启" },
+      { key: "choice:点开 #A-2179 的详情", title: "点开 #A-2179", note: "查看完整反馈" },
+      { key: "choice:先关掉面板，去开会", title: "先去开会", note: "错过早期线索" },
     ],
   },
   {
-    title: "第二章",
+    title: "推荐策略",
     items: [
-      { key: "sawPrivacyFlow", title: "查看数据流图", note: "发现后台隐私链路" },
-      { key: "privacyJoined", title: "参与隐私画像", note: "卷入数据证据链" },
-      { key: "highStimulusProfiled", title: "画像降噪", note: "高刺激与隐私合流" },
-      { key: "localPrivacySandbox", title: "端侧沙盒", note: "替代方案证据" },
-      { key: "privacyReported", title: "匿名监管", note: "调查线开启" },
+      { key: "choice:先救曲线，把高刺激内容接入主推荐池", title: "高刺激推荐", note: "短期救曲线" },
+      { key: "choice:限制负面扩散，但保留部分增长实验", title: "限制负面扩散", note: "折中控风险" },
+      { key: "choice:提出健康推荐模式，重做一个小流量目标函数", title: "健康推荐模式", note: "解锁替代路线" },
     ],
   },
   {
-    title: "第三章",
+    title: "邮件处理",
     items: [
-      { key: "questionedEvaTrigger", title: "追问触发条件", note: "看见高孤独召回" },
-      { key: "dependenceOptimized", title: "情感依赖", note: "EVA 更会挽留用户" },
-      { key: "antiAddiction", title: "防沉迷机制", note: "让 EVA 学会告别" },
-      { key: "usedHealthyForEva", title: "健康 EVA", note: "替代方案落地" },
-      { key: "evaSuspended", title: "暂停二期", note: "保护未成年案例" },
-      { key: "reportPublished", title: "公开风险报告", note: "危机提前爆发" },
+      { key: "choice:打开数据流图，先看清楚它到底要什么", title: "打开数据流图", note: "看清字段链路" },
+      { key: "choice:把邮件转给林澈，问他有没有见过类似项目", title: "转给林澈", note: "让伦理线介入" },
+      { key: "choice:先不点附件，等沈舟晚上说明", title: "先不点附件", note: "减少访问痕迹" },
+    ],
+  },
+  {
+    title: "隐私画像",
+    items: [
+      { key: "choice:接入后台数据，但把需求名写成“推荐相关性提升”", title: "接入后台数据", note: "配合画像项目" },
+      { key: "choice:拒绝参与，并要求增加最小化采集方案", title: "拒绝参与", note: "要求最小采集" },
+      { key: "choice:匿名把材料交给监管窗口", title: "匿名监管", note: "触发调查线" },
+      { key: "choice:用后台画像给高刺激策略“降噪”，只隐藏最危险的用户", title: "画像降噪", note: "条件：高刺激路线" },
+      { key: "choice:提出端侧健康信号沙盒，不上传原始通讯录和位置", title: "端侧沙盒", note: "条件：健康推荐" },
+    ],
+  },
+  {
+    title: "EVA 演示",
+    items: [
+      { key: "choice:追问 EVA 的触发条件", title: "追问触发条件", note: "看到高依赖字段" },
+      { key: "choice:认可演示效果，先让二期继续跑", title: "认可演示", note: "让二期继续跑" },
+      { key: "choice:保持沉默，观察乔岚和林澈的反应", title: "保持沉默", note: "观察双方反应" },
+    ],
+  },
+  {
+    title: "EVA 策略",
+    items: [
+      { key: "choice:继续优化情感依赖模型，让 EVA 更会挽留用户", title: "优化情感依赖", note: "更会挽留用户" },
+      { key: "choice:上线防沉迷和心理提醒，让 EVA 学会告别", title: "防沉迷提醒", note: "让 EVA 学会告别" },
+      { key: "choice:和林澈公开风险研究报告", title: "公开风险报告", note: "提前引爆危机" },
+      { key: "choice:把健康推荐模式接入 EVA，让它优先帮助用户离开", title: "健康 EVA", note: "条件：健康推荐" },
+      { key: "choice:把夏知遥加入“静默陪伴”名单，避免事件在发布会前外溢", title: "静默陪伴名单", note: "条件：画像降噪" },
+      { key: "choice:暂停 EVA 二期，把隐私链路和未成年案例一起交给复核", title: "暂停二期复核", note: "条件：监管线" },
     ],
   },
   {
     title: "最终选择",
     items: [
-      { key: "finalAction:delete", title: "删除日志", note: "沉默或系统路线" },
-      { key: "finalAction:preserve", title: "保留证据", note: "等待调查进入" },
-      { key: "finalAction:publish", title: "公开资料", note: "揭露或被吞没" },
+      { key: "choice:删除日志，保住项目、团队和职位", title: "删除日志", note: "保住职位" },
+      { key: "choice:保留证据，等待调查组进入", title: "保留证据", note: "等待调查" },
+      { key: "choice:公开全部内部资料", title: "公开资料", note: "直接揭露" },
       { key: "choice:让乔岚拖住公关，你转移证据", title: "乔岚协助", note: "转移证据" },
       { key: "choice:把证据同步给监管联系人", title: "监管联系人", note: "同步外部调查" },
       { key: "choice:公开替代方案：端侧沙盒和健康 EVA 不是口号", title: "替代方案", note: "证明存在更好路径" },
@@ -1384,37 +1407,26 @@ const branchCatalog = [
   },
 ];
 
-const branchEdges = [
-  ["viewedA2179", "sawPrivacyFlow"],
-  ["viewedA2179", "privacyReported"],
-  ["highStimulus", "privacyJoined"],
-  ["highStimulus", "highStimulusProfiled"],
-  ["healthyMode", "localPrivacySandbox"],
-  ["sawPrivacyFlow", "questionedEvaTrigger"],
-  ["privacyJoined", "dependenceOptimized"],
-  ["highStimulusProfiled", "dependenceOptimized"],
-  ["highStimulusProfiled", "evaSuspended"],
-  ["localPrivacySandbox", "usedHealthyForEva"],
-  ["privacyReported", "evaSuspended"],
-  ["privacyReported", "reportPublished"],
-  ["questionedEvaTrigger", "finalAction:preserve"],
-  ["dependenceOptimized", "finalAction:delete"],
-  ["dependenceOptimized", "finalAction:publish"],
-  ["antiAddiction", "finalAction:preserve"],
-  ["usedHealthyForEva", "choice:公开替代方案：端侧沙盒和健康 EVA 不是口号"],
-  ["evaSuspended", "choice:用 EVA 暂停记录保护夏知遥，先交出最小必要证据"],
-  ["reportPublished", "finalAction:publish"],
-  ["finalAction:delete", "ending:silent"],
-  ["finalAction:delete", "ending:system"],
-  ["finalAction:preserve", "ending:idealist"],
-  ["finalAction:preserve", "ending:swallowed"],
-  ["finalAction:publish", "ending:idealist"],
-  ["finalAction:publish", "ending:witness"],
-  ["finalAction:publish", "ending:swallowed"],
+const choiceFlowEdges = [
+  ["choice:提出健康推荐模式，重做一个小流量目标函数", "choice:提出端侧健康信号沙盒，不上传原始通讯录和位置"],
+  ["choice:先救曲线，把高刺激内容接入主推荐池", "choice:用后台画像给高刺激策略“降噪”，只隐藏最危险的用户"],
+  ["choice:匿名把材料交给监管窗口", "choice:暂停 EVA 二期，把隐私链路和未成年案例一起交给复核"],
+  ["choice:提出健康推荐模式，重做一个小流量目标函数", "choice:把健康推荐模式接入 EVA，让它优先帮助用户离开"],
+  ["choice:用后台画像给高刺激策略“降噪”，只隐藏最危险的用户", "choice:把夏知遥加入“静默陪伴”名单，避免事件在发布会前外溢"],
+  ["choice:继续优化情感依赖模型，让 EVA 更会挽留用户", "choice:删除日志，保住项目、团队和职位"],
+  ["choice:上线防沉迷和心理提醒，让 EVA 学会告别", "choice:保留证据，等待调查组进入"],
+  ["choice:和林澈公开风险研究报告", "choice:公开全部内部资料"],
   ["choice:让乔岚拖住公关，你转移证据", "ending:idealist"],
   ["choice:把证据同步给监管联系人", "ending:idealist"],
   ["choice:公开替代方案：端侧沙盒和健康 EVA 不是口号", "ending:idealist"],
   ["choice:用 EVA 暂停记录保护夏知遥，先交出最小必要证据", "ending:idealist"],
+  ["choice:删除日志，保住项目、团队和职位", "ending:silent"],
+  ["choice:删除日志，保住项目、团队和职位", "ending:system"],
+  ["choice:保留证据，等待调查组进入", "ending:idealist"],
+  ["choice:保留证据，等待调查组进入", "ending:swallowed"],
+  ["choice:公开全部内部资料", "ending:idealist"],
+  ["choice:公开全部内部资料", "ending:witness"],
+  ["choice:公开全部内部资料", "ending:swallowed"],
 ];
 
 let state = { ...initialState };
@@ -1645,17 +1657,23 @@ function renderProfiles() {
 
 function renderCollection() {
   if (!els.branchMap) return;
-  els.collectionSummary.textContent = `已解锁 ${unlockedEndings.size} / ${Object.keys(endingCatalog).length} 个结局`;
+  const choiceStages = choiceFlowStages.filter((group) => group.title !== "结局");
+  const totalChoiceNodes = choiceStages.reduce((sum, group) => sum + group.items.length, 0);
+  const unlockedChoiceNodes = choiceStages.reduce(
+    (sum, group) => sum + group.items.filter((item) => unlockedBranches.has(item.key)).length,
+    0
+  );
+  els.collectionSummary.textContent = `已点亮 ${unlockedChoiceNodes} / ${totalChoiceNodes} 个选项 · 已解锁 ${unlockedEndings.size} / ${Object.keys(endingCatalog).length} 个结局`;
 
   els.branchMap.innerHTML = "";
-  const columnGap = 238;
-  const rowGap = 64;
-  const nodeWidth = 176;
-  const nodeHeight = 52;
+  const columnGap = 236;
+  const rowGap = 54;
+  const nodeWidth = 178;
+  const nodeHeight = 46;
   const leftPadding = 32;
-  const topPadding = 58;
-  const maxRows = Math.max(...branchCatalog.map((group) => group.items.length));
-  const canvasWidth = leftPadding * 2 + (branchCatalog.length - 1) * columnGap + nodeWidth;
+  const topPadding = 48;
+  const maxRows = Math.max(...choiceFlowStages.map((group) => group.items.length));
+  const canvasWidth = leftPadding * 2 + (choiceFlowStages.length - 1) * columnGap + nodeWidth;
   const canvasHeight = topPadding + (maxRows - 1) * rowGap + nodeHeight + 24;
   const positions = new Map();
 
@@ -1670,7 +1688,29 @@ function renderCollection() {
   svg.setAttribute("aria-hidden", "true");
   flow.appendChild(svg);
 
-  branchCatalog.forEach((group, groupIndex) => {
+  function drawPath(from, to, className) {
+    const start = positions.get(from);
+    const end = positions.get(to);
+    if (!start || !end) return;
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    const midX = start.outX + Math.max(38, (end.inX - start.outX) * 0.44);
+    line.setAttribute("d", `M ${start.outX} ${start.centerY} C ${midX} ${start.centerY}, ${midX} ${end.centerY}, ${end.inX} ${end.centerY}`);
+    line.setAttribute("class", className);
+    svg.appendChild(line);
+  }
+
+  function drawRailPath(d, className = "branch-link branch-link-rail") {
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    line.setAttribute("d", d);
+    line.setAttribute("class", className);
+    svg.appendChild(line);
+  }
+
+  function isUnlocked(item) {
+    return unlockedBranches.has(item.key);
+  }
+
+  choiceFlowStages.forEach((group, groupIndex) => {
     const x = leftPadding + groupIndex * columnGap;
     const label = document.createElement("div");
     label.className = "branch-stage-label";
@@ -1687,28 +1727,50 @@ function renderCollection() {
         outX: x + nodeWidth,
         inX: x,
         centerY: y + nodeHeight / 2,
+        stageIndex: groupIndex,
       });
-      const unlocked = unlockedBranches.has(item.key);
+      const unlocked = isUnlocked(item);
       const node = document.createElement("div");
       const isEnding = item.key.startsWith("ending:");
-      node.className = `branch-node ${unlocked ? "unlocked" : ""} ${isEnding ? "ending-node" : ""}`;
+      node.className = `branch-node ${unlocked ? "unlocked" : "locked"} ${isEnding ? "ending-node" : ""}`;
       node.style.left = `${x}px`;
       node.style.top = `${y}px`;
-      node.innerHTML = `<strong>${unlocked ? item.title : "未发现"}</strong><span>${unlocked ? item.note : "分支尚未解锁"}</span>`;
+      node.innerHTML = `<strong>${item.title}</strong><span>${unlocked ? item.note : "尚未选择 / 尚未解锁"}</span>`;
       flow.appendChild(node);
     });
   });
 
-  for (const [from, to] of branchEdges) {
-    const start = positions.get(from);
-    const end = positions.get(to);
-    if (!start || !end) continue;
+  for (let stageIndex = 0; stageIndex < choiceFlowStages.length - 1; stageIndex += 1) {
+    const fromItems = choiceFlowStages[stageIndex].items;
+    const toItems = choiceFlowStages[stageIndex + 1].items;
+    const fromX = positions.get(fromItems[0].key).outX;
+    const toX = positions.get(toItems[0].key).inX;
+    const railX = fromX + (toX - fromX) / 2;
+    const centers = [...fromItems, ...toItems].map((item) => positions.get(item.key).centerY);
+    const minY = Math.min(...centers);
+    const maxY = Math.max(...centers);
+    drawRailPath(`M ${railX} ${minY} L ${railX} ${maxY}`);
+    for (const item of fromItems) {
+      const pos = positions.get(item.key);
+      drawRailPath(`M ${pos.outX} ${pos.centerY} L ${railX} ${pos.centerY}`);
+    }
+    for (const item of toItems) {
+      const pos = positions.get(item.key);
+      drawRailPath(`M ${railX} ${pos.centerY} L ${pos.inX} ${pos.centerY}`);
+    }
+  }
+
+  for (let stageIndex = 0; stageIndex < choiceFlowStages.length - 1; stageIndex += 1) {
+    const fromItems = choiceFlowStages[stageIndex].items.filter(isUnlocked);
+    const toItems = choiceFlowStages[stageIndex + 1].items.filter(isUnlocked);
+    for (const from of fromItems) {
+      for (const to of toItems) drawPath(from.key, to.key, "branch-link unlocked");
+    }
+  }
+
+  for (const [from, to] of choiceFlowEdges) {
     const unlocked = unlockedBranches.has(from) && unlockedBranches.has(to);
-    const line = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    const midX = start.outX + Math.max(32, (end.inX - start.outX) * 0.42);
-    line.setAttribute("d", `M ${start.outX} ${start.centerY} C ${midX} ${start.centerY}, ${midX} ${end.centerY}, ${end.inX} ${end.centerY}`);
-    line.setAttribute("class", `branch-link ${unlocked ? "unlocked" : ""}`);
-    svg.appendChild(line);
+    drawPath(from, to, `branch-link branch-link-special ${unlocked ? "unlocked" : ""}`);
   }
 
   els.branchMap.appendChild(flow);
