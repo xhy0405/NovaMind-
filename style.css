@@ -277,7 +277,7 @@ button {
 }
 
 .fullscreen-drawer#historyDrawer .drawer-list {
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  grid-template-columns: 1fr;
   align-content: start;
 }
 
@@ -318,9 +318,11 @@ button {
 
 .history-item {
   display: grid;
-  grid-template-columns: 48px 1fr;
-  gap: 12px;
+  grid-template-columns: 34px minmax(72px, 108px) minmax(0, 1fr);
+  gap: 10px;
   align-items: start;
+  min-height: 44px;
+  padding: 7px 10px;
 }
 
 .history-avatar,
@@ -333,8 +335,24 @@ button {
 }
 
 .history-avatar {
-  width: 48px;
-  height: 48px;
+  width: 34px;
+  height: 34px;
+}
+
+.history-item strong {
+  margin: 0;
+  overflow: hidden;
+  color: var(--cyan);
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.history-item p {
+  color: var(--soft);
+  font-size: 14px;
+  line-height: 1.45;
+  white-space: normal;
 }
 
 .profile-card {
@@ -404,36 +422,92 @@ button {
 }
 
 .branch-map {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(145px, 1fr));
-  gap: 12px;
+  position: relative;
+  min-height: 100%;
+  overflow: auto;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 7px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    radial-gradient(circle at 34% 18%, rgba(106, 216, 255, 0.1), transparent 26%),
+    rgba(3, 7, 13, 0.56);
+  background-size: 34px 34px, 34px 34px, auto, auto;
 }
 
-.branch-column {
-  display: grid;
-  gap: 10px;
-  align-content: start;
+.branch-flow {
+  position: relative;
+  min-width: 100%;
 }
 
-.branch-column h3 {
-  margin: 0 0 4px;
-  font-size: 13px;
+.branch-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.branch-link {
+  fill: none;
+  stroke: rgba(204, 214, 228, 0.18);
+  stroke-width: 2;
+}
+
+.branch-link.unlocked {
+  stroke: rgba(106, 216, 255, 0.78);
+  stroke-width: 3;
+  filter: drop-shadow(0 0 5px rgba(106, 216, 255, 0.4));
+}
+
+.branch-stage-label {
+  position: absolute;
+  width: 172px;
   color: var(--soft);
+  font-size: 13px;
+  letter-spacing: 0;
+  text-align: center;
 }
 
 .branch-node {
-  min-height: 66px;
-  padding: 10px;
+  position: absolute;
+  width: 172px;
+  min-height: 58px;
+  padding: 9px 11px;
   border: 1px solid rgba(255, 255, 255, 0.13);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.04);
+  border-radius: 5px;
+  background: rgba(235, 242, 255, 0.08);
   color: rgba(238, 245, 255, 0.46);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
 }
 
 .branch-node.unlocked {
-  border-color: rgba(106, 216, 255, 0.55);
-  background: rgba(106, 216, 255, 0.08);
+  border-color: rgba(106, 216, 255, 0.78);
+  background:
+    linear-gradient(90deg, rgba(22, 143, 214, 0.9), rgba(18, 111, 174, 0.68)),
+    rgba(106, 216, 255, 0.12);
   color: var(--text);
+  box-shadow:
+    0 0 0 1px rgba(106, 216, 255, 0.16),
+    0 0 18px rgba(106, 216, 255, 0.2),
+    0 12px 30px rgba(0, 0, 0, 0.28);
+}
+
+.branch-node.ending-node {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.branch-node.ending-node.unlocked {
+  border-color: rgba(114, 239, 179, 0.8);
+  background:
+    linear-gradient(90deg, rgba(42, 166, 103, 0.92), rgba(26, 122, 84, 0.72)),
+    rgba(114, 239, 179, 0.14);
+  box-shadow:
+    0 0 0 1px rgba(114, 239, 179, 0.18),
+    0 0 20px rgba(114, 239, 179, 0.22),
+    0 12px 30px rgba(0, 0, 0, 0.28);
 }
 
 .branch-node strong {
@@ -835,12 +909,21 @@ button {
   }
 
   .branch-map {
-    grid-template-columns: 1fr;
+    min-height: 520px;
   }
 
   .fullscreen-drawer#historyDrawer .drawer-list,
   .fullscreen-drawer#profileDrawer .drawer-list {
     grid-template-columns: 1fr;
+  }
+
+  .history-item {
+    grid-template-columns: 30px minmax(58px, 76px) minmax(0, 1fr);
+  }
+
+  .history-avatar {
+    width: 30px;
+    height: 30px;
   }
 }
 

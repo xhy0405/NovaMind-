@@ -1321,15 +1321,60 @@ const branchCatalog = [
     ],
   },
   {
-    title: "第四章",
+    title: "最终选择",
     items: [
       { key: "finalAction:delete", title: "删除日志", note: "沉默或系统路线" },
       { key: "finalAction:preserve", title: "保留证据", note: "等待调查进入" },
       { key: "finalAction:publish", title: "公开资料", note: "揭露或被吞没" },
-      { key: "ending:idealist", title: "理想主义者", note: "已解锁结局" },
-      { key: "ending:system", title: "系统的一部分", note: "已解锁结局" },
+      { key: "choice:让乔岚拖住公关，你转移证据", title: "乔岚协助", note: "转移证据" },
+      { key: "choice:把证据同步给监管联系人", title: "监管联系人", note: "同步外部调查" },
+      { key: "choice:公开替代方案：端侧沙盒和健康 EVA 不是口号", title: "替代方案", note: "证明存在更好路径" },
+      { key: "choice:用 EVA 暂停记录保护夏知遥，先交出最小必要证据", title: "最小必要证据", note: "保护具体用户" },
     ],
   },
+  {
+    title: "结局",
+    items: [
+      { key: "ending:silent", title: "沉默的工程师", note: "知道真相却没有再说" },
+      { key: "ending:idealist", title: "理想主义者", note: "推动伦理监管进入公共议程" },
+      { key: "ending:system", title: "系统的一部分", note: "升任 CTO，复制系统" },
+      { key: "ending:witness", title: "代价高昂的证人", note: "真相被看见，代价也是" },
+      { key: "ending:swallowed", title: "被系统吞没", note: "公开失败，被流程消化" },
+    ],
+  },
+];
+
+const branchEdges = [
+  ["viewedA2179", "sawPrivacyFlow"],
+  ["viewedA2179", "privacyReported"],
+  ["highStimulus", "privacyJoined"],
+  ["highStimulus", "highStimulusProfiled"],
+  ["healthyMode", "localPrivacySandbox"],
+  ["sawPrivacyFlow", "questionedEvaTrigger"],
+  ["privacyJoined", "dependenceOptimized"],
+  ["highStimulusProfiled", "dependenceOptimized"],
+  ["highStimulusProfiled", "evaSuspended"],
+  ["localPrivacySandbox", "usedHealthyForEva"],
+  ["privacyReported", "evaSuspended"],
+  ["privacyReported", "reportPublished"],
+  ["questionedEvaTrigger", "finalAction:preserve"],
+  ["dependenceOptimized", "finalAction:delete"],
+  ["dependenceOptimized", "finalAction:publish"],
+  ["antiAddiction", "finalAction:preserve"],
+  ["usedHealthyForEva", "choice:公开替代方案：端侧沙盒和健康 EVA 不是口号"],
+  ["evaSuspended", "choice:用 EVA 暂停记录保护夏知遥，先交出最小必要证据"],
+  ["reportPublished", "finalAction:publish"],
+  ["finalAction:delete", "ending:silent"],
+  ["finalAction:delete", "ending:system"],
+  ["finalAction:preserve", "ending:idealist"],
+  ["finalAction:preserve", "ending:swallowed"],
+  ["finalAction:publish", "ending:idealist"],
+  ["finalAction:publish", "ending:witness"],
+  ["finalAction:publish", "ending:swallowed"],
+  ["choice:让乔岚拖住公关，你转移证据", "ending:idealist"],
+  ["choice:把证据同步给监管联系人", "ending:idealist"],
+  ["choice:公开替代方案：端侧沙盒和健康 EVA 不是口号", "ending:idealist"],
+  ["choice:用 EVA 暂停记录保护夏知遥，先交出最小必要证据", "ending:idealist"],
 ];
 
 let state = { ...initialState };
@@ -1487,10 +1532,18 @@ function renderHistory() {
     row.className = "drawer-item history-item";
     row.innerHTML = `
       <img class="history-avatar" src="assets/characters/${character.asset}" alt="${character.name}">
-      <div><strong>${item.speaker}</strong><p>${item.text}</p></div>
+      <strong>${item.speaker}</strong>
+      <p>${item.text}</p>
     `;
     els.historyList.appendChild(row);
   }
+  scrollHistoryToLatest();
+}
+
+function scrollHistoryToLatest() {
+  requestAnimationFrame(() => {
+    els.historyList.scrollTop = els.historyList.scrollHeight;
+  });
 }
 
 function addEvidence(item) {
@@ -1568,19 +1621,70 @@ function renderCollection() {
   }
 
   els.branchMap.innerHTML = "";
-  for (const group of branchCatalog) {
-    const column = document.createElement("div");
-    column.className = "branch-column";
-    column.innerHTML = `<h3>${group.title}</h3>`;
-    for (const item of group.items) {
+  const columnGap = 250;
+  const rowGap = 94;
+  const nodeWidth = 172;
+  const nodeHeight = 58;
+  const leftPadding = 28;
+  const topPadding = 74;
+  const maxRows = Math.max(...branchCatalog.map((group) => group.items.length));
+  const canvasWidth = leftPadding * 2 + (branchCatalog.length - 1) * columnGap + nodeWidth;
+  const canvasHeight = topPadding + maxRows * rowGap + 42;
+  const positions = new Map();
+
+  const flow = document.createElement("div");
+  flow.className = "branch-flow";
+  flow.style.width = `${canvasWidth}px`;
+  flow.style.height = `${canvasHeight}px`;
+
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("class", "branch-lines");
+  svg.setAttribute("viewBox", `0 0 ${canvasWidth} ${canvasHeight}`);
+  svg.setAttribute("aria-hidden", "true");
+  flow.appendChild(svg);
+
+  branchCatalog.forEach((group, groupIndex) => {
+    const x = leftPadding + groupIndex * columnGap;
+    const label = document.createElement("div");
+    label.className = "branch-stage-label";
+    label.style.left = `${x}px`;
+    label.style.top = "24px";
+    label.textContent = group.title;
+    flow.appendChild(label);
+
+    group.items.forEach((item, itemIndex) => {
+      const y = topPadding + itemIndex * rowGap;
+      positions.set(item.key, {
+        x,
+        y,
+        outX: x + nodeWidth,
+        inX: x,
+        centerY: y + nodeHeight / 2,
+      });
       const unlocked = unlockedBranches.has(item.key);
       const node = document.createElement("div");
-      node.className = `branch-node ${unlocked ? "unlocked" : ""}`;
+      const isEnding = item.key.startsWith("ending:");
+      node.className = `branch-node ${unlocked ? "unlocked" : ""} ${isEnding ? "ending-node" : ""}`;
+      node.style.left = `${x}px`;
+      node.style.top = `${y}px`;
       node.innerHTML = `<strong>${unlocked ? item.title : "未发现"}</strong><span>${unlocked ? item.note : "分支尚未解锁"}</span>`;
-      column.appendChild(node);
-    }
-    els.branchMap.appendChild(column);
+      flow.appendChild(node);
+    });
+  });
+
+  for (const [from, to] of branchEdges) {
+    const start = positions.get(from);
+    const end = positions.get(to);
+    if (!start || !end) continue;
+    const unlocked = unlockedBranches.has(from) && unlockedBranches.has(to);
+    const line = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    const midX = start.outX + Math.max(32, (end.inX - start.outX) * 0.42);
+    line.setAttribute("d", `M ${start.outX} ${start.centerY} C ${midX} ${start.centerY}, ${midX} ${end.centerY}, ${end.inX} ${end.centerY}`);
+    line.setAttribute("class", `branch-link ${unlocked ? "unlocked" : ""}`);
+    svg.appendChild(line);
   }
+
+  els.branchMap.appendChild(flow);
 }
 
 function addHistory(line) {
@@ -1833,6 +1937,7 @@ function toggleDrawer(drawer, button) {
   }
   const open = drawer.classList.toggle("open");
   button.setAttribute("aria-expanded", String(open));
+  if (open && drawer === els.historyDrawer) scrollHistoryToLatest();
 }
 
 els.dialoguePanel.addEventListener("click", (event) => {
