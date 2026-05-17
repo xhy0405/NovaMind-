@@ -1430,8 +1430,9 @@ let evidenceRecords = [];
 let popupCallback = null;
 let unlockedEndings = loadCollectionSet("novamindUnlockedEndings");
 let unlockedBranches = loadCollectionSet("novamindUnlockedBranches");
-let unlockedFlowEdges = loadCollectionSet("novamindUnlockedFlowEdges");
-let currentChoiceKey = "";
+let currentRouteBranches = loadCollectionSet("novamindCurrentRouteBranches");
+let currentRouteEdges = loadCollectionSet("novamindCurrentRouteEdges");
+let currentChoiceKey = localStorage.getItem("novamindCurrentChoiceKey") || "";
 
 const els = {
   stage: document.getElementById("stage"),
@@ -1488,6 +1489,10 @@ function loadCollectionSet(key) {
 
 function saveCollectionSet(key, set) {
   localStorage.setItem(key, JSON.stringify([...set]));
+}
+
+function saveCurrentChoiceKey() {
+  localStorage.setItem("novamindCurrentChoiceKey", currentChoiceKey);
 }
 
 function updateStats() {
@@ -1649,13 +1654,17 @@ function renderProfiles() {
 
 function renderCollection() {
   if (!els.branchMap) return;
-  const choiceStages = choiceFlowStages.filter((group) => group.title !== "结局");
+  const choiceStages = choiceFlowStages.filter((group) => group.items.some((item) => item.key.startsWith("choice:")));
   const totalChoiceNodes = choiceStages.reduce((sum, group) => sum + group.items.length, 0);
-  const unlockedChoiceNodes = choiceStages.reduce(
+  const discoveredChoiceNodes = choiceStages.reduce(
     (sum, group) => sum + group.items.filter((item) => unlockedBranches.has(item.key)).length,
     0
   );
-  els.collectionSummary.textContent = `已点亮 ${unlockedChoiceNodes} / ${totalChoiceNodes} 个选项 · 已解锁 ${unlockedEndings.size} / ${Object.keys(endingCatalog).length} 个结局`;
+  const activeChoiceNodes = choiceStages.reduce(
+    (sum, group) => sum + group.items.filter((item) => currentRouteBranches.has(item.key)).length,
+    0
+  );
+  els.collectionSummary.textContent = `当前路线 ${activeChoiceNodes} 个选项 · 已发现 ${discoveredChoiceNodes} / ${totalChoiceNodes} 个选项 · 已解锁 ${unlockedEndings.size} / ${Object.keys(endingCatalog).length} 个结局`;
 
   els.branchMap.innerHTML = "";
   const columnGap = 236;
@@ -1669,16 +1678,21 @@ function renderCollection() {
   const canvasHeight = topPadding + (maxRows - 1) * rowGap + nodeHeight + 24;
   const positions = new Map();
 
-  const flow = document.createElement("div");
-  flow.className = "branch-flow";
-  flow.style.width = `${canvasWidth}px`;
-  flow.style.height = `${canvasHeight}px`;
-
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-  svg.setAttribute("class", "branch-lines");
+  svg.setAttribute("class", "branch-flow-svg");
+  svg.setAttribute("width", canvasWidth);
+  svg.setAttribute("height", canvasHeight);
   svg.setAttribute("viewBox", `0 0 ${canvasWidth} ${canvasHeight}`);
-  svg.setAttribute("aria-hidden", "true");
-  flow.appendChild(svg);
+  svg.setAttribute("role", "img");
+  svg.setAttribute("aria-label", "剧情流程图");
+
+  const railLayer = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  railLayer.setAttribute("class", "flow-rails");
+  const activeLayer = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  activeLayer.setAttribute("class", "flow-active-links");
+  const nodeLayer = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  nodeLayer.setAttribute("class", "flow-nodes");
+  svg.append(railLayer, activeLayer, nodeLayer);
 
   function drawPath(from, to, className) {
     const start = positions.get(from);
@@ -1688,28 +1702,35 @@ function renderCollection() {
     const midX = start.outX + Math.max(38, (end.inX - start.outX) * 0.44);
     line.setAttribute("d", `M ${start.outX} ${start.centerY} C ${midX} ${start.centerY}, ${midX} ${end.centerY}, ${end.inX} ${end.centerY}`);
     line.setAttribute("class", className);
-    svg.appendChild(line);
+    activeLayer.appendChild(line);
   }
 
   function drawRailPath(d, className = "branch-link branch-link-rail") {
     const line = document.createElementNS("http://www.w3.org/2000/svg", "path");
     line.setAttribute("d", d);
     line.setAttribute("class", className);
-    svg.appendChild(line);
+    railLayer.appendChild(line);
   }
 
-  function isUnlocked(item) {
-    return unlockedBranches.has(item.key);
+  function shortText(text, length = 14) {
+    const chars = Array.from(text || "");
+    return chars.length > length ? `${chars.slice(0, length - 1).join("")}…` : (text || "");
+  }
+
+  function nodeState(item) {
+    if (currentRouteBranches.has(item.key)) return "active";
+    if (unlockedBranches.has(item.key)) return "discovered";
+    return "locked";
   }
 
   choiceFlowStages.forEach((group, groupIndex) => {
     const x = leftPadding + groupIndex * columnGap;
-    const label = document.createElement("div");
-    label.className = "branch-stage-label";
-    label.style.left = `${x}px`;
-    label.style.top = "24px";
+    const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    label.setAttribute("class", "flow-stage-label");
+    label.setAttribute("x", x + nodeWidth / 2);
+    label.setAttribute("y", 28);
     label.textContent = group.title;
-    flow.appendChild(label);
+    nodeLayer.appendChild(label);
 
     group.items.forEach((item, itemIndex) => {
       const y = topPadding + itemIndex * rowGap;
@@ -1721,14 +1742,33 @@ function renderCollection() {
         centerY: y + nodeHeight / 2,
         stageIndex: groupIndex,
       });
-      const unlocked = isUnlocked(item);
-      const node = document.createElement("div");
+
       const isEnding = item.key.startsWith("ending:");
-      node.className = `branch-node ${unlocked ? "unlocked" : "locked"} ${isEnding ? "ending-node" : ""}`;
-      node.style.left = `${x}px`;
-      node.style.top = `${y}px`;
-      node.innerHTML = `<strong>${item.title}</strong><span>${unlocked ? item.note : "尚未选择 / 尚未解锁"}</span>`;
-      flow.appendChild(node);
+      const status = nodeState(item);
+      const node = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      node.setAttribute("class", `flow-node ${status} ${isEnding ? "ending-node" : ""}`);
+      node.setAttribute("transform", `translate(${x} ${y})`);
+
+      const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      rect.setAttribute("width", nodeWidth);
+      rect.setAttribute("height", nodeHeight);
+      rect.setAttribute("rx", 5);
+      rect.setAttribute("ry", 5);
+
+      const title = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      title.setAttribute("class", "flow-node-title");
+      title.setAttribute("x", 10);
+      title.setAttribute("y", 18);
+      title.textContent = shortText(item.title, 13);
+
+      const note = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      note.setAttribute("class", "flow-node-note");
+      note.setAttribute("x", 10);
+      note.setAttribute("y", 35);
+      note.textContent = status === "locked" ? "尚未选择 / 尚未解锁" : shortText(item.note, 15);
+
+      node.append(rect, title, note);
+      nodeLayer.appendChild(node);
     });
   });
 
@@ -1752,16 +1792,16 @@ function renderCollection() {
     }
   }
 
-  for (const edgeKey of unlockedFlowEdges) {
+  for (const edgeKey of currentRouteEdges) {
     const [from, to] = edgeKey.split("=>");
-    drawPath(from, to, "branch-link unlocked");
+    drawPath(from, to, "branch-link active");
   }
 
   for (const [from, to] of conditionalFlowEdges) {
-    if (unlockedFlowEdges.has(`${from}=>${to}`)) drawPath(from, to, "branch-link branch-link-special unlocked");
+    if (currentRouteEdges.has(`${from}=>${to}`)) drawPath(from, to, "branch-link branch-link-special active");
   }
 
-  els.branchMap.appendChild(flow);
+  els.branchMap.appendChild(svg);
 }
 
 function addHistory(line) {
@@ -1851,12 +1891,18 @@ function applyChoice(choice) {
   updateStats();
 }
 
+function unlockCurrentRouteNode(key) {
+  if (!key || currentRouteBranches.has(key)) return;
+  currentRouteBranches.add(key);
+  saveCollectionSet("novamindCurrentRouteBranches", currentRouteBranches);
+}
+
 function unlockFlowEdge(from, to) {
   if (!from || !to) return;
   const key = `${from}=>${to}`;
-  if (unlockedFlowEdges.has(key)) return;
-  unlockedFlowEdges.add(key);
-  saveCollectionSet("novamindUnlockedFlowEdges", unlockedFlowEdges);
+  if (currentRouteEdges.has(key)) return;
+  currentRouteEdges.add(key);
+  saveCollectionSet("novamindCurrentRouteEdges", currentRouteEdges);
 }
 
 function unlockBranch(key) {
@@ -1879,7 +1925,9 @@ function unlockEnding(id) {
 function choose(choice) {
   const selectedChoiceKey = `choice:${choice.label}`;
   unlockFlowEdge(currentChoiceKey, selectedChoiceKey);
+  unlockCurrentRouteNode(selectedChoiceKey);
   currentChoiceKey = selectedChoiceKey;
+  saveCurrentChoiceKey();
   applyChoice(choice);
   if (choice.next === "ending") {
     goToEnding();
@@ -1923,7 +1971,9 @@ function pickEnding() {
 
 function goToEnding() {
   const endingId = pickEndingId();
-  unlockFlowEdge(currentChoiceKey, `ending:${endingId}`);
+  const endingKey = `ending:${endingId}`;
+  unlockFlowEdge(currentChoiceKey, endingKey);
+  unlockCurrentRouteNode(endingKey);
   unlockEnding(endingId);
   startNode({ ...endings[endingId], ending: true, endingId });
 }
@@ -2006,6 +2056,11 @@ function restart() {
   dialogueHistory = [];
   evidenceRecords = [];
   currentChoiceKey = "";
+  currentRouteBranches = new Set();
+  currentRouteEdges = new Set();
+  saveCollectionSet("novamindCurrentRouteBranches", currentRouteBranches);
+  saveCollectionSet("novamindCurrentRouteEdges", currentRouteEdges);
+  saveCurrentChoiceKey();
   updateStats();
   renderHistory();
   renderEvidence();
